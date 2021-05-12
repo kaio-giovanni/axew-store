@@ -17,17 +17,17 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private CategoryService categoryService;
+    private CategoryService service;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public ResponseEntity<List<Category>> findAll () {
-        List<Category> categories = categoryService.findAll();
+        List<Category> categories = service.findAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Category> findById (@PathVariable Long id) {
-        Category category = categoryService.findById(id);
+        var category = service.findById(id);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
