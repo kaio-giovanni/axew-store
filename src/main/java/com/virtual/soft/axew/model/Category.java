@@ -10,8 +10,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String name;
+
+    public Category () {
+    }
 
     public Category (Long id, String name) {
         this.id = id;
