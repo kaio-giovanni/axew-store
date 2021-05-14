@@ -1,8 +1,8 @@
 package com.virtual.soft.axew.controller;
 
-import com.virtual.soft.axew.dto.CategoryDto;
-import com.virtual.soft.axew.model.Category;
-import com.virtual.soft.axew.service.CategoryService;
+import com.virtual.soft.axew.dto.ProductDto;
+import com.virtual.soft.axew.model.Product;
+import com.virtual.soft.axew.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,39 +21,35 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/category")
-public class CategoryController {
+@RequestMapping(value = "/product")
+public class ProductController {
 
     @Autowired
-    private CategoryService service;
+    private ProductService service;
 
     @GetMapping(value = "")
-    @Operation(summary = "Get a list of categories")
+    @Operation(summary = "Get all products")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "List of categories",
+            description = "List of products",
             content = {@Content(mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = CategoryDto.class)))})})
-    public ResponseEntity<List<CategoryDto>> findAll () {
-        List<Category> categories = service.findAll();
-        List<CategoryDto> dto = categories.stream()
-                .map(CategoryDto::new)
-                .collect(Collectors.toList());
+                    array = @ArraySchema(schema = @Schema(implementation = ProductDto.class)))})})
+    public ResponseEntity<List<ProductDto>> findAll () {
+        List<Product> products = service.findAll();
+        List<ProductDto> dto = products.stream().map(ProductDto::new).collect(Collectors.toList());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    @Operation(summary = "Get category by id")
+    @Operation(summary = "Get product by id")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "Category data",
+            description = "Product data",
             content = {@Content(mediaType = "application/json",
-                    schema = @Schema(implementation = CategoryDto.class))})
-    })
-    public ResponseEntity<CategoryDto> findById (@PathVariable Long id) {
-        var category = service.findById(id);
-        var dto = new CategoryDto(category);
+                    schema = @Schema(implementation = ProductDto.class))})})
+    public ResponseEntity<ProductDto> findById (@PathVariable Long id) {
+        var product = service.findById(id);
+        var dto = new ProductDto(product);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
-
 }

@@ -1,5 +1,6 @@
 package com.virtual.soft.axew.service;
 
+import com.virtual.soft.axew.exception.ResourceNotFoundException;
 import com.virtual.soft.axew.model.Category;
 import com.virtual.soft.axew.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,6 @@ public class CategoryService {
 
     public Category findById (Long id) {
         Optional<Category> category = repository.findById(id);
-        return category.orElse(null);
+        return category.orElseThrow(() -> new ResourceNotFoundException("Category not found."));
     }
 }

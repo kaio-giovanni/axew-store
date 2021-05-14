@@ -1,9 +1,11 @@
 package com.virtual.soft.axew.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "category")
+@Table(name = "categories")
 public class Category {
 
     @Id
@@ -12,6 +14,9 @@ public class Category {
 
     @Column(unique = true)
     private String name;
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 
     public Category () {
     }
@@ -35,5 +40,13 @@ public class Category {
 
     public void setName (String name) {
         this.name = name;
+    }
+
+    public Set<Product> getProducts () {
+        return products;
+    }
+
+    public void setProducts (Set<Product> products) {
+        this.products = products;
     }
 }
