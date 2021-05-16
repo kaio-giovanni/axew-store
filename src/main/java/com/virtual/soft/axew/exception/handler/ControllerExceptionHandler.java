@@ -32,4 +32,14 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(errorDto, status);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorDto> illegalArgument (IllegalArgumentException ex, HttpServletRequest request) {
+        final var error = "Invalid arguments";
+        final HttpStatus status = HttpStatus.BAD_REQUEST;
+        var errorDto = new ErrorDto(Instant.now(), status.value(), error, ex.getMessage(), request.getRequestURI());
+
+        return new ResponseEntity<>(errorDto, status);
+    }
+
 }
