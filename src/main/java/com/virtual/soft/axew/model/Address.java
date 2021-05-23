@@ -1,11 +1,14 @@
 package com.virtual.soft.axew.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "addresses")
-public class Address {
+public class Address implements Serializable {
 
+    private static final long serialVersionUID = 1646130179562554418L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -84,5 +87,18 @@ public class Address {
 
     public void setClient (Client client) {
         this.client = client;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return id.equals(address.id);
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash(id);
     }
 }

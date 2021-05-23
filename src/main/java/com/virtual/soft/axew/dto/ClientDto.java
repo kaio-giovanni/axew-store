@@ -81,4 +81,5 @@ public class ClientDto {
     public void setAddress (AddressDto addressDto) {
         this.addressDto = addressDto;
     }
+
 }

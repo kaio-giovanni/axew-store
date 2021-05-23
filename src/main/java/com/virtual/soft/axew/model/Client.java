@@ -1,12 +1,17 @@
 package com.virtual.soft.axew.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "clients")
-public class Client {
+public class Client implements Serializable {
 
+    private static final long serialVersionUID = -5455201925710969077L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +30,9 @@ public class Client {
 
     @OneToOne(mappedBy = "client", cascade = CascadeType.REMOVE)
     private Address address;
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
     public Client () {
     }
@@ -84,5 +92,22 @@ public class Client {
 
     public void setAddress (Address address) {
         this.address = address;
+    }
+
+    public List<Order> getOrders () {
+        return orders;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id.equals(client.id);
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash(id);
     }
 }

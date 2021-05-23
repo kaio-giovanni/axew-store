@@ -1,5 +1,7 @@
 package com.virtual.soft.axew.model.enums;
 
+import javax.validation.constraints.NotNull;
+
 public enum OrderStatus {
     WAITING_PAYMENT(1),
     PAID(2),
@@ -9,7 +11,7 @@ public enum OrderStatus {
 
     private int code;
 
-    private OrderStatus (int code) {
+    OrderStatus (int code) {
         this.code = code;
     }
 
@@ -17,7 +19,7 @@ public enum OrderStatus {
         return code;
     }
 
-    public static OrderStatus valueOf (int code) {
+    public static OrderStatus valueOf (@NotNull int code) {
         for (OrderStatus value : OrderStatus.values()) {
             if (value.getCode() == code) {
                 return value;

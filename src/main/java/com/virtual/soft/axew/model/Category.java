@@ -1,13 +1,16 @@
 package com.virtual.soft.axew.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "categories")
-public class Category {
+public class Category implements Serializable {
 
+    private static final long serialVersionUID = 7765770837190714153L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -48,5 +51,18 @@ public class Category {
 
     public void setProducts (Set<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id.equals(category.id);
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash(id);
     }
 }
