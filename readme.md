@@ -2,6 +2,10 @@
 
 A API REST created using spring-boot with Java 11.
 
+#### Status
+
+🟡 Project under construction ️🛠️
+
 #### Dependencies
 
 - git
