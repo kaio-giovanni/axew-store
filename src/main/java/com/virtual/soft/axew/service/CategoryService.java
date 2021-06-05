@@ -1,5 +1,6 @@
 package com.virtual.soft.axew.service;
 
+import com.virtual.soft.axew.dto.CategoryNewDto;
 import com.virtual.soft.axew.exception.ResourceNotFoundException;
 import com.virtual.soft.axew.model.Category;
 import com.virtual.soft.axew.repository.CategoryRepository;
@@ -22,5 +23,10 @@ public class CategoryService {
     public Category findById (Long id) {
         Optional<Category> category = repository.findById(id);
         return category.orElseThrow(() -> new ResourceNotFoundException("Category not found."));
+    }
+
+    public Category save (CategoryNewDto newCategory) {
+        var category = new Category(null, newCategory.getName());
+        return repository.save(category);
     }
 }

@@ -1,6 +1,7 @@
 package com.virtual.soft.axew.controller;
 
 import com.virtual.soft.axew.dto.CategoryDto;
+import com.virtual.soft.axew.dto.CategoryNewDto;
 import com.virtual.soft.axew.model.Category;
 import com.virtual.soft.axew.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,10 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +38,19 @@ public class CategoryController {
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @PostMapping({"", ""})
+    @Operation(summary = "Save a new category")
+    @ApiResponses(value = {@ApiResponse(responseCode = "201",
+            description = "Category data",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = CategoryDto.class))})})
+    public ResponseEntity<CategoryDto> save (@RequestBody CategoryNewDto newCategory) {
+        var category = service.save(newCategory);
+        var dto = new CategoryDto(category);
+
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}")
