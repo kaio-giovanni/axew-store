@@ -31,10 +31,14 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable (HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        final var message = "BAD REQUEST!! Check your request and try again";
-        var pathInfo = ((ServletWebRequest) request).getRequest().getRequestURI();
-        var dto = new ErrorDto(Instant.now(), status.value(), message, ex.getMessage(), pathInfo);
+        HttpServletRequest servletRequest = ((ServletWebRequest) request).getRequest();
+        var dto = makeBadRequestError(servletRequest, status, ex);
         return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
+    }
+
+    private ErrorDto makeBadRequestError (HttpServletRequest request, HttpStatus status, Exception exception) {
+        final var message = "BAD REQUEST!! Check your request and try again";
+        return new ErrorDto(Instant.now(), status.value(), message, exception.getMessage(), request.getRequestURI());
     }
 
     private ErrorDto makeAccessDeniedError (HttpServletRequest request, Exception exception) {
