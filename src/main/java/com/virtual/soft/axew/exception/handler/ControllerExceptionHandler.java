@@ -1,12 +1,15 @@
 package com.virtual.soft.axew.exception.handler;
 
 import com.virtual.soft.axew.dto.error.ErrorDto;
-import com.virtual.soft.axew.exception.DatabaseException;
-import com.virtual.soft.axew.exception.ResourceNotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,31 +18,39 @@ import java.time.Instant;
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorDto> resourceNotFound (ResourceNotFoundException ex, HttpServletRequest request) {
-        final var error = "Resource not found.";
-        final HttpStatus status = HttpStatus.NOT_FOUND;
-        var errorDto = new ErrorDto(Instant.now(), status.value(), error, ex.getMessage(), request.getRequestURI());
-
-        return new ResponseEntity<>(errorDto, status);
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDto> exceptionHandler (Exception exception, HttpServletRequest request) {
+        if (isAccessDenied(exception)) {
+            var dto = makeAccessDeniedError(request, exception);
+            return new ResponseEntity<>(dto, HttpStatus.FORBIDDEN);
+        } else {
+            var dto = makeInternalError(request, exception);
+            return new ResponseEntity<>(dto, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @ExceptionHandler(DatabaseException.class)
-    public ResponseEntity<ErrorDto> databaseError (DatabaseException ex, HttpServletRequest request) {
-        final var error = "Database error.";
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable (HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        final var message = "BAD REQUEST!! Check your request and try again";
+        var pathInfo = ((ServletWebRequest) request).getRequest().getRequestURI();
+        var dto = new ErrorDto(Instant.now(), status.value(), message, ex.getMessage(), pathInfo);
+        return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
+    }
+
+    private ErrorDto makeAccessDeniedError (HttpServletRequest request, Exception exception) {
+        final var message = "FORBIDDEN!! Sorry, you are not authorized to access this feature";
+        final HttpStatus status = HttpStatus.FORBIDDEN;
+        return new ErrorDto(Instant.now(), status.value(), message, exception.getMessage(), request.getRequestURI());
+    }
+
+    private ErrorDto makeInternalError (HttpServletRequest request, Exception exception) {
+        final var message = "INTERNAL ERROR!! Sorry, something went wrong. Please, try again";
         final HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        var errorDto = new ErrorDto(Instant.now(), status.value(), error, ex.getMessage(), request.getRequestURI());
-
-        return new ResponseEntity<>(errorDto, status);
+        return new ErrorDto(Instant.now(), status.value(), message, exception.getMessage(), request.getRequestURI());
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorDto> illegalArgument (IllegalArgumentException ex, HttpServletRequest request) {
-        final var error = "Invalid arguments";
-        final HttpStatus status = HttpStatus.BAD_REQUEST;
-        var errorDto = new ErrorDto(Instant.now(), status.value(), error, ex.getMessage(), request.getRequestURI());
-
-        return new ResponseEntity<>(errorDto, status);
+    private boolean isAccessDenied (Exception exception) {
+        return exception instanceof AccessDeniedException;
     }
 
 }

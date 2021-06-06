@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ public class CategoryController {
             description = "Category data",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CategoryDto.class))})})
-    public ResponseEntity<CategoryDto> save (@RequestBody CategoryNewDto newCategory) {
+    public ResponseEntity<CategoryDto> save (@Valid @RequestBody CategoryNewDto newCategory) {
         var category = service.save(newCategory);
         var dto = new CategoryDto(category);
 
