@@ -1,0 +1,63 @@
+version: 2.1
+
+executors:
+  default:
+    working_directory: ~/giovanni
+    docker:
+      - image: circleci/openjdk:11
+
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: ~/giovanni
+
+jobs:
+  test:
+    executor: default
+    steps:
+      - checkout
+      - *attach_workspace
+      - run:
+          name: 'Run tests'
+          command: |
+            ./gradlew check
+
+#  deploy:
+#    executor: default
+#    steps:
+#      - checkout
+#      - *attach_workspace
+#      - setup_remote_docker
+#      - run:
+#          name: 'Deploy'
+#          command: |
+#            echo STAGE=${STAGE} >> .env
+#            STAGE=${STAGE} \
+#            ./gradlew deploy
+
+workflows:
+  build_and_deploy:
+    jobs:
+      - test:
+          context: TEST
+      - deploy:
+          context: DEVELOPER
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - develop
+      - hold:
+          type: approval
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
+      - deploy:
+          context: PRODUCTION
+          requires:
+            - hold
+          filters:
+            branches:
+              only: main
