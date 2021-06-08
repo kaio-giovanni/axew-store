@@ -44,16 +44,6 @@ test {
     }
 }
 
-task deploy(type: Exec) {
-    def stage = System.getenv('STAGE')
-
-    if (stage != null) {
-        println 'Deploying project in STAGE ${stage}'
-    } else {
-        println 'STAGE cannot be null'
-    }
-}
-
 sonarlint {
     ignoreFailures = false
     excludes {
@@ -67,4 +57,12 @@ sonarlint {
 
 gitHooks {
     hooks = ['pre-commit': 'check']
+}
+
+task deploy() {
+    def stage = System.getenv('STAGE')
+
+    if (stage != null) {
+        println "Deploying project in STAGE $stage"
+    }
 }
