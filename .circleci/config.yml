@@ -32,7 +32,7 @@ jobs:
           command: |
             echo STAGE=${STAGE} >> .env
             STAGE=${STAGE} \
-            ./gradlew deploy
+            gradle deploy
 
 workflows:
   build_and_deploy:
