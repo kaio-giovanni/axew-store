@@ -58,3 +58,11 @@ sonarlint {
 gitHooks {
     hooks = ['pre-commit': 'check']
 }
+
+task deploy() {
+    def stage = System.getenv('STAGE')
+
+    if (stage != null) {
+        println "Deploying project in STAGE $stage"
+    }
+}
