@@ -15,10 +15,10 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
     public Category () {
@@ -64,5 +64,14 @@ public class Category implements Serializable {
     @Override
     public int hashCode () {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString () {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", products=" + products +
+                '}';
     }
 }

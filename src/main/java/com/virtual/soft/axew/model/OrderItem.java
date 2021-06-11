@@ -11,13 +11,14 @@ import java.util.Objects;
 @Table(name = "order_items")
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = -6195591757514692734L;
+
     @EmbeddedId
     private OrderItemKey id = new OrderItemKey();
 
-    @Column
+    @Column(nullable = false)
     private Integer quantity;
 
-    @Column
+    @Column(nullable = false)
     private Double price;
 
     public OrderItem () {
@@ -77,5 +78,14 @@ public class OrderItem implements Serializable {
     @Override
     public int hashCode () {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString () {
+        return "OrderItem{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
     }
 }

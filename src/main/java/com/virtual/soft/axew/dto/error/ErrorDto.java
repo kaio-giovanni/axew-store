@@ -8,13 +8,13 @@ import java.time.Instant;
 public class ErrorDto {
     @Schema(example = "2021-01-01 12:00:00")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
-    private Instant timestamp;
+    private final Instant timestamp;
 
     @Schema(example = "404")
-    private Integer status;
+    private final Integer status;
 
     @Schema(example = "Resource Exception")
-    private String error;
+    private final String error;
 
     @Schema(example = "Resource not found.")
     private String message;
@@ -22,51 +22,39 @@ public class ErrorDto {
     @Schema(example = "/url")
     private String path;
 
-    public ErrorDto (Instant timestamp, Integer status, String error, String message, String path) {
+    public ErrorDto (Instant timestamp, Integer status, String error) {
         this.timestamp = timestamp;
         this.status = status;
         this.error = error;
+    }
+
+    public ErrorDto setMessage (String message) {
         this.message = message;
+        return this;
+    }
+
+    public ErrorDto setPath (String path) {
         this.path = path;
+        return this;
     }
 
     public Instant getTimestamp () {
         return timestamp;
     }
 
-    public void setTimestamp (Instant timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public Integer getStatus () {
         return status;
-    }
-
-    public void setStatus (Integer status) {
-        this.status = status;
     }
 
     public String getError () {
         return error;
     }
 
-    public void setError (String error) {
-        this.error = error;
-    }
-
     public String getMessage () {
         return message;
     }
 
-    public void setMessage (String message) {
-        this.message = message;
-    }
-
     public String getPath () {
         return path;
-    }
-
-    public void setPath (String path) {
-        this.path = path;
     }
 }

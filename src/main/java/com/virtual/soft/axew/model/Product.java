@@ -15,84 +15,88 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String description;
 
-    @Column
+    @Column(nullable = false)
     private Double price;
 
     @Column
     private String imgUrl;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
-    @OneToMany(mappedBy = "id.product")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.product")
     private Set<OrderItem> items = new HashSet<>();
 
     public Product () {
     }
 
-    public Product (Long id, String name, String description, Double price, String imgUrl) {
-        this.id = id;
+    public Product (String name, String description, Double price) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.imgUrl = imgUrl;
     }
 
     public Long getId () {
         return id;
     }
 
-    public void setId (Long id) {
+    public Product setId (Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName () {
         return name;
     }
 
-    public void setName (String name) {
+    public Product setName (String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription () {
         return description;
     }
 
-    public void setDescription (String description) {
+    public Product setDescription (String description) {
         this.description = description;
+        return this;
     }
 
     public Double getPrice () {
         return price;
     }
 
-    public void setPrice (Double price) {
+    public Product setPrice (Double price) {
         this.price = price;
+        return this;
     }
 
     public String getImgUrl () {
         return imgUrl;
     }
 
-    public void setImgUrl (String imgUrl) {
+    public Product setImgUrl (String imgUrl) {
         this.imgUrl = imgUrl;
+        return this;
     }
 
     public Set<Category> getCategories () {
         return categories;
     }
 
-    public void setCategories (Set<Category> categories) {
+    public Product setCategories (Set<Category> categories) {
         this.categories = categories;
+        return this;
     }
 
     public Set<Order> getOrders () {
@@ -114,5 +118,18 @@ public class Product implements Serializable {
     @Override
     public int hashCode () {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString () {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", categories=" + categories +
+                ", items=" + items +
+                '}';
     }
 }

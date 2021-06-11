@@ -12,10 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,13 +25,18 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping(value = "")
-    @Operation(summary = "Get all products")
+    @Operation(summary = "Get a paginate list of products")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "List of products",
             content = {@Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = ProductDto.class)))})})
-    public ResponseEntity<List<ProductDto>> findAll () {
-        List<Product> products = service.findAll();
+    public ResponseEntity<List<ProductDto>> findAll (
+            @Schema(example = "1")
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @Schema(example = "10")
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        List<Product> products = service.findAll(page, size);
         List<ProductDto> dto = products.stream().map(ProductDto::new).collect(Collectors.toList());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -47,8 +49,27 @@ public class ProductController {
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ProductDto.class))})})
     public ResponseEntity<ProductDto> findById (@PathVariable Long id) {
-        var product = service.findById(id);
-        var dto = new ProductDto(product);
+        Product product = service.findById(id);
+        ProductDto dto = new ProductDto(product);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/search")
+    @Operation(summary = "List products by name")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200",
+            description = "List of products",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ProductDto[].class))})})
+    public ResponseEntity<List<ProductDto>> findByName (
+            @RequestParam(name = "name") String name,
+            @Schema(example = "1")
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @Schema(example = "10")
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        List<Product> products = service.findByName(name, page, size);
+        List<ProductDto> dto = products.stream().map(ProductDto::new).collect(Collectors.toList());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

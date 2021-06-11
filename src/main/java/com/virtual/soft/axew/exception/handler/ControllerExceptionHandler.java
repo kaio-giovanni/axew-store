@@ -38,19 +38,25 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     private ErrorDto makeBadRequestError (HttpServletRequest request, HttpStatus status, Exception exception) {
         final var message = "BAD REQUEST!! Check your request and try again";
-        return new ErrorDto(Instant.now(), status.value(), message, exception.getMessage(), request.getRequestURI());
+        return new ErrorDto(Instant.now(), status.value(), message)
+                .setMessage(exception.getMessage())
+                .setPath(request.getRequestURI());
     }
 
     private ErrorDto makeAccessDeniedError (HttpServletRequest request, Exception exception) {
         final var message = "FORBIDDEN!! Sorry, you are not authorized to access this feature";
         final HttpStatus status = HttpStatus.FORBIDDEN;
-        return new ErrorDto(Instant.now(), status.value(), message, exception.getMessage(), request.getRequestURI());
+        return new ErrorDto(Instant.now(), status.value(), message)
+                .setMessage(exception.getMessage())
+                .setPath(request.getRequestURI());
     }
 
     private ErrorDto makeInternalError (HttpServletRequest request, Exception exception) {
         final var message = "INTERNAL ERROR!! Sorry, something went wrong. Please, try again";
         final HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        return new ErrorDto(Instant.now(), status.value(), message, exception.getMessage(), request.getRequestURI());
+        return new ErrorDto(Instant.now(), status.value(), message)
+                .setMessage(exception.getMessage())
+                .setPath(request.getRequestURI());
     }
 
     private boolean isAccessDenied (Exception exception) {

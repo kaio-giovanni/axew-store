@@ -13,32 +13,30 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String street;
 
-    @Column
+    @Column(nullable = false)
     private String number;
 
-    @Column
+    @Column(nullable = false)
     private String district;
 
-    @Column
+    @Column(nullable = false)
     private String zipCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
 
     public Address () {
     }
 
-    public Address (Long id, String street, String number, String district, String zipCode, Client client) {
-        this.id = id;
+    public Address (String street, String number, String district, String zipCode) {
         this.street = street;
         this.number = number;
         this.district = district;
         this.zipCode = zipCode;
-        this.client = client;
     }
 
     public Long getId () {
@@ -85,8 +83,9 @@ public class Address implements Serializable {
         return client;
     }
 
-    public void setClient (Client client) {
+    public Address setClient (Client client) {
         this.client = client;
+        return this;
     }
 
     @Override
@@ -100,5 +99,17 @@ public class Address implements Serializable {
     @Override
     public int hashCode () {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString () {
+        return "Address{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", number='" + number + '\'' +
+                ", district='" + district + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", client=" + client +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
-package com.virtual.soft.axew.dto;
+package com.virtual.soft.axew.dto.client;
 
+import com.virtual.soft.axew.dto.AddressDto;
 import com.virtual.soft.axew.model.Client;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -8,26 +9,30 @@ import java.time.LocalDate;
 public class ClientDto {
 
     @Schema(example = "1")
-    private Long id;
+    private final Long id;
 
     @Schema(example = "User name")
-    private String name;
+    private final String name;
+
+    @Schema(example = "000.000.000-00")
+    private final String cpf;
 
     @Schema(example = "User email")
-    private String email;
+    private final String email;
 
     @Schema(example = "12334556")
-    private String phone;
+    private final String phone;
 
     @Schema(example = "2000-01-01")
-    private LocalDate birthDate;
+    private final LocalDate birthDate;
 
     @Schema
-    private AddressDto addressDto;
+    private final AddressDto addressDto;
 
     public ClientDto (Client client) {
         id = client.getId();
         name = client.getName();
+        cpf = client.getCpf();
         email = client.getEmail();
         phone = client.getPhone();
         birthDate = client.getBirthDate();
@@ -38,48 +43,27 @@ public class ClientDto {
         return id;
     }
 
-    public void setId (Long id) {
-        this.id = id;
-    }
-
     public String getName () {
         return name;
     }
 
-    public void setName (String name) {
-        this.name = name;
+    public String getCpf () {
+        return cpf;
     }
 
     public String getEmail () {
         return email;
     }
 
-    public void setEmail (String email) {
-        this.email = email;
-    }
-
     public String getPhone () {
         return phone;
-    }
-
-    public void setPhone (String phone) {
-        this.phone = phone;
     }
 
     public LocalDate getBirthDate () {
         return birthDate;
     }
 
-    public void setBirthDate (LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public AddressDto getAddress () {
+    public AddressDto getAddressDto () {
         return addressDto;
     }
-
-    public void setAddress (AddressDto addressDto) {
-        this.addressDto = addressDto;
-    }
-
 }
