@@ -1,22 +1,22 @@
 package com.virtual.soft.axew.controller;
 
 import com.virtual.soft.axew.dto.category.CategoryDto;
+import com.virtual.soft.axew.dto.category.CategoryPageDto;
 import com.virtual.soft.axew.dto.category.CategorySaveDto;
 import com.virtual.soft.axew.model.Category;
 import com.virtual.soft.axew.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,17 +31,22 @@ public class CategoryController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "List of categories",
             content = {@Content(mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = CategoryDto.class)))})})
-    public ResponseEntity<List<CategoryDto>> findAll (
+                    schema = @Schema(implementation = CategoryPageDto.class))})})
+    public ResponseEntity<CategoryPageDto> findAll (
             @Schema(example = "1")
             @RequestParam(name = "page", defaultValue = "0") int page,
             @Schema(example = "10")
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        List<Category> categories = service.findAll(page, size);
-        List<CategoryDto> dto = categories.stream()
-                .map(CategoryDto::new)
-                .collect(Collectors.toList());
+        Page<Category> categories = service.findAll(page, size);
+        CategoryPageDto dto = new CategoryPageDto()
+                .categories(categories.getContent()
+                        .stream()
+                        .map(CategoryDto::new)
+                        .collect(Collectors.toList()))
+                .totalPages(categories.getTotalPages())
+                .totalElements(categories.getTotalElements())
+                .numberOfElements(categories.getNumberOfElements());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -60,24 +65,29 @@ public class CategoryController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/filter")
-    @Operation(summary = "Filter categories by name")
+    @GetMapping(value = "/search")
+    @Operation(summary = "Search categories by name")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "List of categories",
+            description = "Categories paginated",
             content = {@Content(mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = CategoryDto.class)))})})
-    public ResponseEntity<List<CategoryDto>> listByName (
+                    schema = @Schema(implementation = CategoryPageDto.class))})})
+    public ResponseEntity<CategoryPageDto> findByName (
             @RequestParam(name = "name") String name,
             @Schema(example = "1")
             @RequestParam(name = "page", defaultValue = "0") int page,
             @Schema(example = "10")
             @RequestParam(name = "size", defaultValue = "10") int size) {
-        List<Category> categories = service.findByName(name, page, size);
-        List<CategoryDto> dtos = categories.stream()
-                .map(CategoryDto::new)
-                .collect(Collectors.toList());
+        Page<Category> categories = service.findByName(name, page, size);
+        CategoryPageDto dto = new CategoryPageDto()
+                .categories(categories.getContent()
+                        .stream()
+                        .map(CategoryDto::new)
+                        .collect(Collectors.toList()))
+                .totalPages(categories.getTotalPages())
+                .totalElements(categories.getTotalElements())
+                .numberOfElements(categories.getNumberOfElements());
 
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping({"", ""})

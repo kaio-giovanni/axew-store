@@ -6,11 +6,11 @@ import com.virtual.soft.axew.model.Category;
 import com.virtual.soft.axew.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,10 +19,11 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repository;
 
-    public List<Category> findAll (int page, int size) {
+    public Page<Category> findAll (int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Category> categories = repository.findAll(pageable);
-        return categories.getContent();
+        Page<Category> categoryPage = repository.findAll(pageable);
+        return new PageImpl<>(categoryPage.getContent(),
+                pageable, categoryPage.getTotalElements());
     }
 
     public Category findById (Long id) {
@@ -30,10 +31,11 @@ public class CategoryService {
         return category.orElseThrow(() -> new ResourceNotFoundException("Category not found."));
     }
 
-    public List<Category> findByName (String name, int page, int size) {
+    public Page<Category> findByName (String name, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Category> categories = repository.findByName(name, pageable);
-        return categories.getContent();
+        return new PageImpl<>(categories.getContent(),
+                pageable, categories.getTotalElements());
     }
 
     public Category save (Category c) {

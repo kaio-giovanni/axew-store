@@ -1,6 +1,7 @@
 package com.virtual.soft.axew.controller;
 
-import com.virtual.soft.axew.dto.ProductDto;
+import com.virtual.soft.axew.dto.product.ProductDto;
+import com.virtual.soft.axew.dto.product.ProductPageDto;
 import com.virtual.soft.axew.model.Product;
 import com.virtual.soft.axew.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,20 +58,26 @@ public class ProductController {
     }
 
     @GetMapping(value = "/search")
-    @Operation(summary = "List products by name")
+    @Operation(summary = "Search products by name")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "List of products",
+            description = "Products paginated",
             content = {@Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ProductDto[].class))})})
-    public ResponseEntity<List<ProductDto>> findByName (
+                    schema = @Schema(implementation = ProductPageDto.class))})})
+    public ResponseEntity<ProductPageDto> findByName (
             @RequestParam(name = "name") String name,
             @Schema(example = "1")
             @RequestParam(name = "page", defaultValue = "0") int page,
             @Schema(example = "10")
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        List<Product> products = service.findByName(name, page, size);
-        List<ProductDto> dto = products.stream().map(ProductDto::new).collect(Collectors.toList());
+        Page<Product> products = service.findByName(name, page, size);
+        ProductPageDto dto = new ProductPageDto()
+                .products(products.getContent()
+                        .stream().map(ProductDto::new)
+                        .collect(Collectors.toList()))
+                .totalPages(products.getTotalPages())
+                .totalElements(products.getTotalElements())
+                .numberOfElements(products.getNumberOfElements());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
