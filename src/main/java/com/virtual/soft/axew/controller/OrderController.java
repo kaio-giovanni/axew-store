@@ -1,6 +1,7 @@
 package com.virtual.soft.axew.controller;
 
-import com.virtual.soft.axew.dto.OrderDto;
+import com.virtual.soft.axew.dto.order.OrderDto;
+import com.virtual.soft.axew.model.Order;
 import com.virtual.soft.axew.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,10 +27,11 @@ public class OrderController {
     @Operation(summary = "Get order by id")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "Order data",
-            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = OrderDto.class))})})
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = OrderDto.class))})})
     public ResponseEntity<OrderDto> findById (@PathVariable Long id) {
-        var order = service.findById(id);
-        var dto = new OrderDto(order);
+        Order order = service.findById(id);
+        OrderDto dto = new OrderDto(order);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

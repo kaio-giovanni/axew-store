@@ -12,30 +12,29 @@ import java.util.Set;
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
-
     private static final long serialVersionUID = -125525506440689739L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private Instant moment;
 
-    @Column
+    @Column(nullable = false)
     private Integer orderStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @OneToMany(mappedBy = "id.order")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
 
     public Order () {
     }
 
-    public Order (Long id, Instant moment, OrderStatus orderStatus, Client client) {
-        this.id = id;
+    public Order (Instant moment, OrderStatus orderStatus, Client client) {
         this.moment = moment;
         setOrderStatus(orderStatus);
         this.client = client;
@@ -79,7 +78,7 @@ public class Order implements Serializable {
         return items;
     }
 
-    public Double getTotal () {
+    public double getTotal () {
         var total = 0.0;
         for (OrderItem item : items) {
             total += item.getSubTotal();
@@ -98,6 +97,17 @@ public class Order implements Serializable {
     @Override
     public int hashCode () {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString () {
+        return "Order{" +
+                "id=" + id +
+                ", moment=" + moment +
+                ", orderStatus=" + orderStatus +
+                ", client=" + client +
+                ", items=" + items +
+                '}';
     }
 }
 

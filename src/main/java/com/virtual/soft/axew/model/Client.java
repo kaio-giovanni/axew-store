@@ -16,82 +16,109 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
+    private String cpf;
+
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true)
+    @Column(nullable = false)
+    private String password;
+
+    @Column(unique = true, nullable = false)
     private String phone;
 
-    @Column
+    @Column(nullable = false)
     private LocalDate birthDate;
 
-    @OneToOne(mappedBy = "client", cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.REMOVE)
     private Address address;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
     public Client () {
     }
 
-    public Client (Long id, String name, String email, String phone, LocalDate birthDate, Address address) {
-        this.id = id;
+    public Client (String name, String cpf, String email) {
         this.name = name;
+        this.cpf = cpf;
         this.email = email;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.address = address;
     }
 
     public Long getId () {
         return id;
     }
 
-    public void setId (Long id) {
+    public Client setId (Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName () {
         return name;
     }
 
-    public void setName (String name) {
+    public Client setName (String name) {
         this.name = name;
+        return this;
+    }
+
+    public String getCpf () {
+        return cpf;
+    }
+
+    public Client setCpf (String cpf) {
+        this.cpf = cpf;
+        return this;
     }
 
     public String getEmail () {
         return email;
     }
 
-    public void setEmail (String email) {
+    public Client setEmail (String email) {
         this.email = email;
+        return this;
+    }
+
+    public String getPassword () {
+        return password;
+    }
+
+    public Client setPassword (String password) {
+        this.password = password;
+        return this;
     }
 
     public String getPhone () {
         return phone;
     }
 
-    public void setPhone (String phone) {
+    public Client setPhone (String phone) {
         this.phone = phone;
+        return this;
     }
 
     public LocalDate getBirthDate () {
         return birthDate;
     }
 
-    public void setBirthDate (LocalDate birthDate) {
+    public Client setBirthDate (LocalDate birthDate) {
         this.birthDate = birthDate;
+        return this;
     }
 
     public Address getAddress () {
         return address;
     }
 
-    public void setAddress (Address address) {
+    public Client setAddress (Address address) {
         this.address = address;
+        return this;
     }
 
     public List<Order> getOrders () {
@@ -103,11 +130,26 @@ public class Client implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return id.equals(client.id);
+        return Objects.equals(id, client.id);
     }
 
     @Override
     public int hashCode () {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString () {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", birthDate=" + birthDate +
+                ", address=" + address +
+                ", orders=" + orders +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
-package com.virtual.soft.axew.dto;
+package com.virtual.soft.axew.dto.category;
 
+import com.virtual.soft.axew.dto.product.ProductDto;
 import com.virtual.soft.axew.model.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -32,23 +33,11 @@ public class CategoryDto {
         return id;
     }
 
-    public void setId (Long id) {
-        this.id = id;
-    }
-
     public String getName () {
         return name;
     }
 
-    public void setName (String name) {
-        this.name = name;
-    }
-
     public List<ProductDto> getProducts () {
         return products;
-    }
-
-    public void setProducts (List<ProductDto> products) {
-        this.products = products;
     }
 }

@@ -1,5 +1,6 @@
-package com.virtual.soft.axew.dto;
+package com.virtual.soft.axew.dto.order;
 
+import com.virtual.soft.axew.dto.client.ClientDto;
 import com.virtual.soft.axew.model.Order;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -47,47 +48,23 @@ public class OrderDto {
         return id;
     }
 
-    public void setId (Long id) {
-        this.id = id;
-    }
-
     public Instant getMoment () {
         return moment;
-    }
-
-    public void setMoment (Instant moment) {
-        this.moment = moment;
     }
 
     public Integer getOrderStatus () {
         return orderStatus;
     }
 
-    public void setOrderStatus (Integer orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
     public List<OrderItemDto> getItems () {
         return items;
-    }
-
-    public void setItems (List<OrderItemDto> items) {
-        this.items = items;
     }
 
     public double getTotal () {
         return total;
     }
 
-    public void setTotal (double total) {
-        this.total = total;
-    }
-
     public ClientDto getClient () {
         return client;
-    }
-
-    public void setClient (ClientDto client) {
-        this.client = client;
     }
 }
