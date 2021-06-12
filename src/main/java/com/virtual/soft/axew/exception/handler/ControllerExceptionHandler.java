@@ -2,6 +2,7 @@ package com.virtual.soft.axew.exception.handler;
 
 import com.virtual.soft.axew.dto.error.ErrorDto;
 import com.virtual.soft.axew.exception.ResourceNotFoundException;
+import com.virtual.soft.axew.utils.SentryUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +65,8 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ErrorDto makeInternalError (HttpServletRequest request, Exception exception) {
+        SentryUtils sentryUtils = new SentryUtils();
+        sentryUtils.sendException(exception, request.getRequestURI());
         final String message = "INTERNAL ERROR!! Sorry, something went wrong. Please, try again";
         final HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         return new ErrorDto(Instant.now(), status.value(), message)

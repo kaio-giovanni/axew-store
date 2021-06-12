@@ -3,7 +3,7 @@ package com.virtual.soft.axew.controller;
 import com.virtual.soft.axew.dto.client.ClientDto;
 import com.virtual.soft.axew.dto.client.ClientPageDto;
 import com.virtual.soft.axew.dto.client.ClientSaveDto;
-import com.virtual.soft.axew.model.Client;
+import com.virtual.soft.axew.entity.Client;
 import com.virtual.soft.axew.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,7 +29,7 @@ public class ClientController {
     @GetMapping(value = "")
     @Operation(summary = "Get a paginated list of users")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "Users paginated",
+            description = "Clients paginated",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ClientPageDto.class))})})
     public ResponseEntity<ClientPageDto> findAll (

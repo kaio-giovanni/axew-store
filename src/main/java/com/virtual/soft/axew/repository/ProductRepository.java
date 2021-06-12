@@ -1,6 +1,6 @@
 package com.virtual.soft.axew.repository;
 
-import com.virtual.soft.axew.model.Product;
+import com.virtual.soft.axew.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

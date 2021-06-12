@@ -1,4 +1,4 @@
-package com.virtual.soft.axew.model;
+package com.virtual.soft.axew.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -71,7 +71,6 @@ public class Category implements Serializable {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", products=" + products +
                 '}';
     }
 }

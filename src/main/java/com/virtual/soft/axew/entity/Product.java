@@ -1,4 +1,4 @@
-package com.virtual.soft.axew.model;
+package com.virtual.soft.axew.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

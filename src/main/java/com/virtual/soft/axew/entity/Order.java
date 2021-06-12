@@ -1,6 +1,6 @@
-package com.virtual.soft.axew.model;
+package com.virtual.soft.axew.entity;
 
-import com.virtual.soft.axew.model.enums.OrderStatus;
+import com.virtual.soft.axew.entity.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -57,7 +57,7 @@ public class Order implements Serializable {
     }
 
     public OrderStatus getOrderStatus () {
-        return OrderStatus.valueOf(orderStatus);
+        return OrderStatus.toEnum(orderStatus);
     }
 
     public void setOrderStatus (OrderStatus orderStatus) {

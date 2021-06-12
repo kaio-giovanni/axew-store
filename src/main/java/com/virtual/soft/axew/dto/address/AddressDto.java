@@ -1,6 +1,6 @@
 package com.virtual.soft.axew.dto.address;
 
-import com.virtual.soft.axew.model.Address;
+import com.virtual.soft.axew.entity.Address;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AddressDto {

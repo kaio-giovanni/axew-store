@@ -16,7 +16,11 @@ public class DotEnvUtils {
     }
 
     public static String getSentryDsn () {
-        return dotenv.get("SENTRY_DSN");
+        return dotenv.get("SENTRY_DSN", "");
+    }
+
+    public static String getSecretKey () {
+        return dotenv.get("SECRET_KEY", "AbCdEfGhIYxZ");
     }
 
     public static String getAwsAccessKeyId () {

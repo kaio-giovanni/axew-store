@@ -2,7 +2,7 @@ package com.virtual.soft.axew.service;
 
 import com.virtual.soft.axew.dto.category.CategorySaveDto;
 import com.virtual.soft.axew.exception.ResourceNotFoundException;
-import com.virtual.soft.axew.model.Category;
+import com.virtual.soft.axew.entity.Category;
 import com.virtual.soft.axew.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

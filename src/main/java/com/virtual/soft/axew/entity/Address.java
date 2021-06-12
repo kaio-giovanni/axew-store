@@ -1,4 +1,4 @@
-package com.virtual.soft.axew.model;
+package com.virtual.soft.axew.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -109,7 +109,7 @@ public class Address implements Serializable {
                 ", number='" + number + '\'' +
                 ", district='" + district + '\'' +
                 ", zipCode='" + zipCode + '\'' +
-                ", client=" + client +
+                ", client=" + client.getName() +
                 '}';
     }
 }

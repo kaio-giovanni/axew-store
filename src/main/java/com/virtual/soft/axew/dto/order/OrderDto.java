@@ -1,7 +1,7 @@
 package com.virtual.soft.axew.dto.order;
 
 import com.virtual.soft.axew.dto.client.ClientDto;
-import com.virtual.soft.axew.model.Order;
+import com.virtual.soft.axew.entity.Order;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.Instant;

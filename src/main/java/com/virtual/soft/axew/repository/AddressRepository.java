@@ -1,6 +1,6 @@
 package com.virtual.soft.axew.repository;
 
-import com.virtual.soft.axew.model.Address;
+import com.virtual.soft.axew.entity.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

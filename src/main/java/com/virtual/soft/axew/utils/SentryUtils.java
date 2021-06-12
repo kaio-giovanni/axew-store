@@ -3,9 +3,8 @@ package com.virtual.soft.axew.utils;
 import io.sentry.Sentry;
 
 public class SentryUtils {
-    private String sentryDsn;
-    private String stage;
-    private static final String PROJECT_NAME = "axew-api";
+    private final String sentryDsn;
+    private final String stage;
 
     public SentryUtils () {
         sentryDsn = DotEnvUtils.getSentryDsn();
@@ -16,13 +15,13 @@ public class SentryUtils {
         });
     }
 
-    public void sendException (Throwable throwable) {
+    public void sendException (Throwable throwable, String path) {
         if (throwable == null) {
             return;
         }
 
         Sentry.configureScope(scope -> {
-            scope.setTag("projectName", PROJECT_NAME);
+            scope.setTag("path", path);
             scope.setExtra("error", throwable.toString());
         });
 

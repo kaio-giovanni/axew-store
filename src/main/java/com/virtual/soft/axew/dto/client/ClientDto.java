@@ -1,10 +1,12 @@
 package com.virtual.soft.axew.dto.client;
 
 import com.virtual.soft.axew.dto.address.AddressDto;
-import com.virtual.soft.axew.model.Client;
+import com.virtual.soft.axew.entity.Client;
+import com.virtual.soft.axew.entity.enums.RoleEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class ClientDto {
 
@@ -26,6 +28,9 @@ public class ClientDto {
     @Schema(example = "2000-01-01")
     private final LocalDate birthDate;
 
+    @Schema(example = "[\"ROLE_ADMIN\",\"ROLE_USER\"]")
+    private final Set<RoleEnum> roles;
+
     @Schema
     private final AddressDto addressDto;
 
@@ -36,6 +41,7 @@ public class ClientDto {
         email = client.getEmail();
         phone = client.getPhone();
         birthDate = client.getBirthDate();
+        roles = client.getRoles();
         addressDto = new AddressDto(client.getAddress());
     }
 
@@ -61,6 +67,10 @@ public class ClientDto {
 
     public LocalDate getBirthDate () {
         return birthDate;
+    }
+
+    public Set<RoleEnum> getRoles () {
+        return roles;
     }
 
     public AddressDto getAddressDto () {

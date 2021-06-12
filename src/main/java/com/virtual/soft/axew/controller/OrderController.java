@@ -1,7 +1,7 @@
 package com.virtual.soft.axew.controller;
 
 import com.virtual.soft.axew.dto.order.OrderDto;
-import com.virtual.soft.axew.model.Order;
+import com.virtual.soft.axew.entity.Order;
 import com.virtual.soft.axew.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

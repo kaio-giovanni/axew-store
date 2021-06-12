@@ -1,6 +1,6 @@
 package com.virtual.soft.axew.repository;
 
-import com.virtual.soft.axew.model.OrderItem;
+import com.virtual.soft.axew.entity.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

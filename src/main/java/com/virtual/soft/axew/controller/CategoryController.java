@@ -3,7 +3,7 @@ package com.virtual.soft.axew.controller;
 import com.virtual.soft.axew.dto.category.CategoryDto;
 import com.virtual.soft.axew.dto.category.CategoryPageDto;
 import com.virtual.soft.axew.dto.category.CategorySaveDto;
-import com.virtual.soft.axew.model.Category;
+import com.virtual.soft.axew.entity.Category;
 import com.virtual.soft.axew.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,7 +29,7 @@ public class CategoryController {
     @GetMapping(value = "")
     @Operation(summary = "Get a paginated list of categories")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "List of categories",
+            description = "Categories paginated",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CategoryPageDto.class))})})
     public ResponseEntity<CategoryPageDto> findAll (
