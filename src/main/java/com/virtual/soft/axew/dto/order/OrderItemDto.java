@@ -1,4 +1,4 @@
-package com.virtual.soft.axew.dto;
+package com.virtual.soft.axew.dto.order;
 
 import com.virtual.soft.axew.dto.product.ProductDto;
 import com.virtual.soft.axew.model.OrderItem;

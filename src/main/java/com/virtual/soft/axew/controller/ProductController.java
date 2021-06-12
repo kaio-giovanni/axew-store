@@ -2,10 +2,10 @@ package com.virtual.soft.axew.controller;
 
 import com.virtual.soft.axew.dto.product.ProductDto;
 import com.virtual.soft.axew.dto.product.ProductPageDto;
+import com.virtual.soft.axew.dto.product.ProductSaveDto;
 import com.virtual.soft.axew.model.Product;
 import com.virtual.soft.axew.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,15 +31,21 @@ public class ProductController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "List of products",
             content = {@Content(mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = ProductDto.class)))})})
-    public ResponseEntity<List<ProductDto>> findAll (
+                    schema = @Schema(implementation = ProductPageDto.class))})})
+    public ResponseEntity<ProductPageDto> findAll (
             @Schema(example = "1")
             @RequestParam(name = "page", defaultValue = "0") int page,
             @Schema(example = "10")
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        List<Product> products = service.findAll(page, size);
-        List<ProductDto> dto = products.stream().map(ProductDto::new).collect(Collectors.toList());
+        Page<Product> products = service.findAll(page, size);
+        ProductPageDto dto = new ProductPageDto()
+                .products(products.getContent()
+                        .stream().map(ProductDto::new)
+                        .collect(Collectors.toList()))
+                .totalPages(products.getTotalPages())
+                .totalElements(products.getTotalElements())
+                .numberOfElements(products.getNumberOfElements());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -80,5 +86,19 @@ public class ProductController {
                 .numberOfElements(products.getNumberOfElements());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @PostMapping({"", ""})
+    @Operation(summary = "Save a new Product")
+    @ApiResponses(value = {@ApiResponse(responseCode = "201",
+            description = "Product saved data",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ProductDto.class))})})
+    public ResponseEntity<ProductDto> save (@Valid @RequestBody ProductSaveDto newProduct) {
+        Product product = service.fromDto(newProduct);
+        Product productSaved = service.save(product);
+        ProductDto dto = new ProductDto(productSaved);
+
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 }

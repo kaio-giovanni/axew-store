@@ -13,7 +13,7 @@ public class ClientSaveDto {
     private String name;
 
     @Schema(example = "000.000.000-00")
-    @Size(min = 14, max = 14, message = "CPF must be have format ###.###.###-##")
+    @Size(min = 14, max = 14)
     private String cpf;
 
     @Schema(example = "myemail@test.com")
@@ -21,11 +21,11 @@ public class ClientSaveDto {
     private String email;
 
     @Schema(example = "mypassword")
-    @Size(min = 5, max = 30, message = "Password must be have 5-30 characters")
+    @Size(min = 5, max = 30)
     private String password;
 
-    @Schema(example = "+55 99 99999-9999")
-    @Size(min = 17, max = 17, message = "Phone must be have format +## ## #####-####")
+    @Schema(example = "+55 00 99999-9999")
+    @Size(min = 17, max = 17)
     private String phone;
 
     @Schema(example = "2000-01-01")
@@ -91,4 +91,5 @@ public class ClientSaveDto {
     public String getZipCode () {
         return zipCode;
     }
+
 }

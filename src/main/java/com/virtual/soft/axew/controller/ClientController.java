@@ -32,7 +32,7 @@ public class ClientController {
             description = "Users paginated",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ClientPageDto.class))})})
-    public ResponseEntity<ClientPageDto> findByPagination (
+    public ResponseEntity<ClientPageDto> findAll (
             @Schema(example = "1")
             @RequestParam(name = "page", defaultValue = "0") int page,
             @Schema(example = "10")
@@ -71,8 +71,8 @@ public class ClientController {
                     schema = @Schema(implementation = ClientDto.class))})})
     public ResponseEntity<ClientDto> save (@Valid @RequestBody ClientSaveDto newClient) {
         Client client = service.convertFromDto(newClient);
-        Client clientSave = service.save(client);
-        ClientDto dto = new ClientDto(clientSave);
+        Client clientSaved = service.save(client);
+        ClientDto dto = new ClientDto(clientSaved);
 
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }

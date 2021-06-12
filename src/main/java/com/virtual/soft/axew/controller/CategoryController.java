@@ -98,8 +98,8 @@ public class CategoryController {
                     schema = @Schema(implementation = CategoryDto.class))})})
     public ResponseEntity<CategoryDto> save (@Valid @RequestBody CategorySaveDto newCategory) {
         Category category = service.convertFromDto(newCategory);
-        Category categorySave = service.save(category);
-        CategoryDto dto = new CategoryDto(categorySave);
+        Category categorySaved = service.save(category);
+        CategoryDto dto = new CategoryDto(categorySaved);
 
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }

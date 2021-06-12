@@ -21,6 +21,9 @@ public class ClientService {
     @Autowired
     private ClientRepository repository;
 
+    @Autowired
+    private AddressService addressService;
+
     public Page<Client> findAll (int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Client> clients = repository.findAll(pageable);
@@ -34,15 +37,20 @@ public class ClientService {
 
     @Transactional
     public Client save (Client client) {
+        addressService.save(client.getAddress());
         return repository.save(client);
     }
 
     public Client convertFromDto (ClientSaveDto c) {
-        Address address = new Address(c.getStreet(), c.getNumber(), c.getDistrict(), c.getZipCode());
-        return new Client(c.getName(), c.getCpf(), c.getEmail())
+        Client client = new Client(c.getName(), c.getCpf(), c.getEmail())
                 .setPhone(c.getPhone())
                 .setBirthDate(c.getBirthDate())
-                .setPassword(c.getPassword())
-                .setAddress(address);
+                .setPassword(c.getPassword());
+        Address address = new Address(c.getStreet(), c.getNumber(),
+                c.getDistrict(), c.getZipCode())
+                .setClient(client);
+        client.setAddress(address);
+
+        return client;
     }
 }

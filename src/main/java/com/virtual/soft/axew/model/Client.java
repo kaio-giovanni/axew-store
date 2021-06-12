@@ -145,6 +145,7 @@ public class Client implements Serializable {
                 ", name='" + name + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", birthDate=" + birthDate +
                 ", address=" + address +

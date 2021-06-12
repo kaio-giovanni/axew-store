@@ -78,7 +78,7 @@ public class Order implements Serializable {
         return items;
     }
 
-    public Double getTotal () {
+    public double getTotal () {
         var total = 0.0;
         for (OrderItem item : items) {
             total += item.getSubTotal();

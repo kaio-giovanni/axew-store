@@ -1,6 +1,6 @@
 package com.virtual.soft.axew.dto.client;
 
-import com.virtual.soft.axew.dto.AddressDto;
+import com.virtual.soft.axew.dto.address.AddressDto;
 import com.virtual.soft.axew.model.Client;
 import io.swagger.v3.oas.annotations.media.Schema;
 

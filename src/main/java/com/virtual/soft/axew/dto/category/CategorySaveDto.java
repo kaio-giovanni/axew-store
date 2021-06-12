@@ -8,8 +8,8 @@ import javax.validation.constraints.Size;
 public class CategorySaveDto {
 
     @Schema(example = "Technology")
-    @NotEmpty(message = "Category name cannot be empty")
-    @Size(min = 5, max = 60, message = "Category name must be have 5-60 characters")
+    @NotEmpty
+    @Size(min = 5, max = 60)
     private String name;
 
     public CategorySaveDto () {
