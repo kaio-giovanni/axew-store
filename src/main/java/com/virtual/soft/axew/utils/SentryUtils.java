@@ -15,17 +15,18 @@ public class SentryUtils {
         });
     }
 
-    public void sendException (Throwable throwable, String path) {
+    public void sendException (Throwable throwable, String tag) {
         if (throwable == null) {
             return;
         }
 
         Sentry.configureScope(scope -> {
-            scope.setTag("path", path);
+            scope.setTag("tag", tag);
             scope.setExtra("error", throwable.toString());
         });
 
         Sentry.captureException(throwable);
+        throwable.printStackTrace();
     }
 
 }

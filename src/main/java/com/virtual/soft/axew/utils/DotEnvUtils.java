@@ -19,8 +19,24 @@ public class DotEnvUtils {
         return dotenv.get("SENTRY_DSN", "");
     }
 
-    public static String getSecretKey () {
-        return dotenv.get("SECRET_KEY", "AbCdEfGhIYxZ");
+    public static String getDatabaseUrl () {
+        return dotenv.get("DB_URL");
+    }
+
+    public static String getDatabaseUserName () {
+        return dotenv.get("DB_USERNAME");
+    }
+
+    public static String getDatabasePassword () {
+        return dotenv.get("DB_PASSWORD");
+    }
+
+    public static String getJwtSecret () {
+        return dotenv.get("JWT_SECRET", "AbCdEfGhIYxZ");
+    }
+
+    public static String getJwtExpiration () {
+        return dotenv.get("JWT_EXPIRATION");
     }
 
     public static String getAwsAccessKeyId () {

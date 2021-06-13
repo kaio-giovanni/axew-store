@@ -28,11 +28,11 @@ public class ClientDto {
     @Schema(example = "2000-01-01")
     private final LocalDate birthDate;
 
-    @Schema(example = "[\"ROLE_ADMIN\",\"ROLE_USER\"]")
-    private final Set<RoleEnum> roles;
-
     @Schema
-    private final AddressDto addressDto;
+    private final AddressDto address;
+
+    @Schema(example = "[\"ADMIN\",\"USER\"]")
+    private final Set<RoleEnum> roles;
 
     public ClientDto (Client client) {
         id = client.getId();
@@ -42,7 +42,7 @@ public class ClientDto {
         phone = client.getPhone();
         birthDate = client.getBirthDate();
         roles = client.getRoles();
-        addressDto = new AddressDto(client.getAddress());
+        address = new AddressDto(client.getAddress());
     }
 
     public Long getId () {
@@ -73,7 +73,7 @@ public class ClientDto {
         return roles;
     }
 
-    public AddressDto getAddressDto () {
-        return addressDto;
+    public AddressDto getAddress () {
+        return address;
     }
 }

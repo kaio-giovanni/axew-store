@@ -22,7 +22,7 @@ public class ClientSaveDto {
     @NotEmpty
     private String email;
 
-    @Schema(example = "mypassword")
+    @Schema(example = "my_password")
     @Size(min = 5, max = 30)
     private String password;
 

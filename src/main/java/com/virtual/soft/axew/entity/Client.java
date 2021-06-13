@@ -37,13 +37,13 @@ public class Client implements Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "ROLES")
-    private Set<Integer> roles = new HashSet<>();
+    private final Set<Integer> roles = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.REMOVE)
     private Address address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();
+    private final List<Order> orders = new ArrayList<>();
 
     public Client () {
         addRole(RoleEnum.USER);

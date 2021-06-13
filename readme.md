@@ -14,13 +14,15 @@ A API REST created using spring-boot with Java 11.
 
 #### Project setup
 
-- Execute the commands bellow:
+1. Execute the commands bellow:
 
 ```bash
 git clone https://github.com/kaio-giovanni/axew-store 
 cd axew-store
 gradle clean build
 ```
+
+2. Please create an `.env` file in the project root and enter your credentials based on the `.env.example` file.
 
 #### Run project
 

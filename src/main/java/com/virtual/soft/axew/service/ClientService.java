@@ -1,9 +1,9 @@
 package com.virtual.soft.axew.service;
 
 import com.virtual.soft.axew.dto.client.ClientSaveDto;
-import com.virtual.soft.axew.exception.ResourceNotFoundException;
 import com.virtual.soft.axew.entity.Address;
 import com.virtual.soft.axew.entity.Client;
+import com.virtual.soft.axew.exception.ResourceNotFoundException;
 import com.virtual.soft.axew.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,6 +37,10 @@ public class ClientService {
     public Client findById (Long id) {
         Optional<Client> client = repository.findById(id);
         return client.orElseThrow(() -> new ResourceNotFoundException("Client not found."));
+    }
+
+    public Client findByEmail (String email) {
+        return repository.findByEmail(email);
     }
 
     @Transactional
