@@ -29,4 +29,12 @@ public enum RoleEnum {
 
         throw new IllegalArgumentException("Invalid RoleEnum");
     }
+
+    @Override
+    public String toString () {
+        return "RoleEnum{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }

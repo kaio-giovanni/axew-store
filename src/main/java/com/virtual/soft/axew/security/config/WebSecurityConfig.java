@@ -1,11 +1,13 @@
 package com.virtual.soft.axew.security.config;
 
 import com.virtual.soft.axew.security.filter.JwtAuthenticationFilter;
-import com.virtual.soft.axew.security.jwt.JwtMaker;
+import com.virtual.soft.axew.security.filter.JwtAuthorizationFilter;
+import com.virtual.soft.axew.security.jwt.JwtAuth;
 import com.virtual.soft.axew.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,7 +26,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserAuthService userAuthService;
 
     @Autowired
-    private JwtMaker jwtMaker;
+    private JwtAuth jwtAuth;
+
+    private static final String[] GET_PUBLIC_MATCHERS = new String[]{
+            "/category/**",
+            "/product/**"
+    };
 
     @Override
     protected void configure (HttpSecurity http) throws Exception {
@@ -33,13 +40,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**")
+                .antMatchers(HttpMethod.GET, GET_PUBLIC_MATCHERS)
                 .permitAll()
                 .anyRequest()
                 .authenticated();
         http
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtMaker))
-                .formLogin().loginPage("/login");
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtAuth))
+                .addFilter(
+                        new JwtAuthorizationFilter(authenticationManager(),
+                                jwtAuth,
+                                userAuthService));
+
     }
 
     @Override

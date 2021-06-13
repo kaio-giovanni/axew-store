@@ -3,7 +3,7 @@ package com.virtual.soft.axew.security.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.virtual.soft.axew.dto.user.UserAuthDto;
 import com.virtual.soft.axew.exception.JsonReaderException;
-import com.virtual.soft.axew.security.jwt.JwtMaker;
+import com.virtual.soft.axew.security.jwt.JwtAuth;
 import com.virtual.soft.axew.security.user.UserAuth;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,14 +20,12 @@ import java.util.ArrayList;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private static final String HEADER_AUTH = "Authorization";
-    private static final String TOKEN_PREFIX = "Bearer ";
     private final AuthenticationManager authenticationManager;
-    private final JwtMaker jwtMaker;
+    private final JwtAuth jwtAuth;
 
-    public JwtAuthenticationFilter (AuthenticationManager authenticationManager, JwtMaker jwtMaker) {
+    public JwtAuthenticationFilter (AuthenticationManager authenticationManager, JwtAuth jwtAuth) {
         this.authenticationManager = authenticationManager;
-        this.jwtMaker = jwtMaker;
+        this.jwtAuth = jwtAuth;
     }
 
     @Override
@@ -46,11 +44,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication (HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication (HttpServletRequest request,
+                                             HttpServletResponse response,
+                                             FilterChain chain,
+                                             Authentication authResult) throws IOException, ServletException {
         String userName = ((UserAuth) authResult.getPrincipal()).getUsername();
-        String token = jwtMaker.makeToken(userName);
-        response.addHeader(HEADER_AUTH, TOKEN_PREFIX + token);
+        String token = jwtAuth.makeToken(userName);
+        response.addHeader(jwtAuth.getHeaderAuth(), jwtAuth.getTokenPrefix() + token);
     }
-
-
 }
