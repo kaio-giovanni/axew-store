@@ -31,6 +31,10 @@ public class UserAuth implements UserDetails {
         return id;
     }
 
+    public boolean hasRole (RoleEnum role) {
+        return authorities.contains(new SimpleGrantedAuthority(role.getCode()));
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities () {
         return authorities;

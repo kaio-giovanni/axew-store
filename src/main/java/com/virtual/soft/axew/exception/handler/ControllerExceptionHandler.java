@@ -1,6 +1,7 @@
 package com.virtual.soft.axew.exception.handler;
 
 import com.virtual.soft.axew.dto.error.ErrorDto;
+import com.virtual.soft.axew.exception.AuthorizationException;
 import com.virtual.soft.axew.exception.ResourceNotFoundException;
 import com.virtual.soft.axew.utils.SentryUtils;
 import org.springframework.http.HttpHeaders;
@@ -75,7 +76,8 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private boolean isAccessDenied (Exception exception) {
-        return exception instanceof AccessDeniedException;
+        return exception instanceof AccessDeniedException ||
+                exception instanceof AuthorizationException;
     }
 
     private boolean isResourceNotFound (Exception exception) {

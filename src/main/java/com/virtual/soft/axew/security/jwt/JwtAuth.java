@@ -60,7 +60,6 @@ public class JwtAuth {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception exception) {
-            exception.printStackTrace();
             return null;
         }
     }

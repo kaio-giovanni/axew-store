@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -89,6 +90,7 @@ public class ProductController {
     }
 
     @PostMapping({"", ""})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Save a new Product")
     @ApiResponses(value = {@ApiResponse(responseCode = "201",
             description = "Product saved data",
