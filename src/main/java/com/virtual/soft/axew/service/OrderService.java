@@ -1,7 +1,7 @@
 package com.virtual.soft.axew.service;
 
 import com.virtual.soft.axew.exception.ResourceNotFoundException;
-import com.virtual.soft.axew.model.Order;
+import com.virtual.soft.axew.entity.Order;
 import com.virtual.soft.axew.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

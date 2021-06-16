@@ -1,7 +1,7 @@
 package com.virtual.soft.axew.controller;
 
 import com.virtual.soft.axew.dto.order.OrderDto;
-import com.virtual.soft.axew.model.Order;
+import com.virtual.soft.axew.entity.Order;
 import com.virtual.soft.axew.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class OrderController {
     private OrderService service;
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @Operation(summary = "Get order by id")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "Order data",

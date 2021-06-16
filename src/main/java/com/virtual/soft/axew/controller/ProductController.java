@@ -3,7 +3,7 @@ package com.virtual.soft.axew.controller;
 import com.virtual.soft.axew.dto.product.ProductDto;
 import com.virtual.soft.axew.dto.product.ProductPageDto;
 import com.virtual.soft.axew.dto.product.ProductSaveDto;
-import com.virtual.soft.axew.model.Product;
+import com.virtual.soft.axew.entity.Product;
 import com.virtual.soft.axew.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,7 +30,7 @@ public class ProductController {
     @GetMapping(value = "")
     @Operation(summary = "Get a paginate list of products")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "List of products",
+            description = "Products paginated",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ProductPageDto.class))})})
     public ResponseEntity<ProductPageDto> findAll (
@@ -89,6 +90,7 @@ public class ProductController {
     }
 
     @PostMapping({"", ""})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Save a new Product")
     @ApiResponses(value = {@ApiResponse(responseCode = "201",
             description = "Product saved data",

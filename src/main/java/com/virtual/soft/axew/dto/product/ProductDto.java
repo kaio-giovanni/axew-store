@@ -1,6 +1,6 @@
 package com.virtual.soft.axew.dto.product;
 
-import com.virtual.soft.axew.model.Product;
+import com.virtual.soft.axew.entity.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ProductDto {

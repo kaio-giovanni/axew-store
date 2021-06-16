@@ -1,15 +1,20 @@
 package com.virtual.soft.axew.service;
 
 import com.virtual.soft.axew.dto.client.ClientSaveDto;
+import com.virtual.soft.axew.entity.Address;
+import com.virtual.soft.axew.entity.Client;
+import com.virtual.soft.axew.entity.enums.RoleEnum;
+import com.virtual.soft.axew.exception.AuthorizationException;
 import com.virtual.soft.axew.exception.ResourceNotFoundException;
-import com.virtual.soft.axew.model.Address;
-import com.virtual.soft.axew.model.Client;
 import com.virtual.soft.axew.repository.ClientRepository;
+import com.virtual.soft.axew.security.user.UserAuth;
+import com.virtual.soft.axew.utils.UserAuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +29,9 @@ public class ClientService {
     @Autowired
     private AddressService addressService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public Page<Client> findAll (int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Client> clients = repository.findAll(pageable);
@@ -31,8 +39,17 @@ public class ClientService {
     }
 
     public Client findById (Long id) {
+        UserAuth userAuth = UserAuthUtils.getAuthenticatedUser();
+        if (userAuth == null || (!userAuth.hasRole(RoleEnum.ADMIN) && !userAuth.getId().equals(id))) {
+            throw new AuthorizationException("Access Denied!");
+        }
+
         Optional<Client> client = repository.findById(id);
         return client.orElseThrow(() -> new ResourceNotFoundException("Client not found."));
+    }
+
+    public Client findByEmail (String email) {
+        return repository.findByEmail(email);
     }
 
     @Transactional
@@ -45,11 +62,12 @@ public class ClientService {
         Client client = new Client(c.getName(), c.getCpf(), c.getEmail())
                 .setPhone(c.getPhone())
                 .setBirthDate(c.getBirthDate())
-                .setPassword(c.getPassword());
+                .setPassword(passwordEncoder.encode(c.getPassword()));
         Address address = new Address(c.getStreet(), c.getNumber(),
                 c.getDistrict(), c.getZipCode())
                 .setClient(client);
         client.setAddress(address);
+        c.getRoles().forEach(code -> client.addRole(RoleEnum.toEnum(code)));
 
         return client;
     }

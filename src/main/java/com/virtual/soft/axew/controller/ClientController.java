@@ -3,7 +3,7 @@ package com.virtual.soft.axew.controller;
 import com.virtual.soft.axew.dto.client.ClientDto;
 import com.virtual.soft.axew.dto.client.ClientPageDto;
 import com.virtual.soft.axew.dto.client.ClientSaveDto;
-import com.virtual.soft.axew.model.Client;
+import com.virtual.soft.axew.entity.Client;
 import com.virtual.soft.axew.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,9 +28,10 @@ public class ClientController {
     private ClientService service;
 
     @GetMapping(value = "")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Get a paginated list of users")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "Users paginated",
+            description = "Clients paginated",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ClientPageDto.class))})})
     public ResponseEntity<ClientPageDto> findAll (
@@ -51,6 +53,7 @@ public class ClientController {
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @Operation(summary = "Get user by id")
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "User data",
@@ -64,6 +67,7 @@ public class ClientController {
     }
 
     @PostMapping({"", ""})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Save new client")
     @ApiResponses(value = {@ApiResponse(responseCode = "201",
             description = "Client data",

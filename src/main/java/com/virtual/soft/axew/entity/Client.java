@@ -1,11 +1,12 @@
-package com.virtual.soft.axew.model;
+package com.virtual.soft.axew.entity;
+
+import com.virtual.soft.axew.entity.enums.RoleEnum;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "clients")
@@ -34,19 +35,25 @@ public class Client implements Serializable {
     @Column(nullable = false)
     private LocalDate birthDate;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "ROLES")
+    private final Set<Integer> roles = new HashSet<>();
+
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.REMOVE)
     private Address address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();
+    private final List<Order> orders = new ArrayList<>();
 
     public Client () {
+        addRole(RoleEnum.USER);
     }
 
     public Client (String name, String cpf, String email) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
+        addRole(RoleEnum.USER);
     }
 
     public Long getId () {
@@ -112,6 +119,16 @@ public class Client implements Serializable {
         return this;
     }
 
+    public Set<RoleEnum> getRoles () {
+        return roles.stream()
+                .map(RoleEnum::toEnum)
+                .collect(Collectors.toSet());
+    }
+
+    public void addRole (RoleEnum role) {
+        roles.add(role.getId());
+    }
+
     public Address getAddress () {
         return address;
     }
@@ -148,6 +165,7 @@ public class Client implements Serializable {
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", birthDate=" + birthDate +
+                ", roles=" + roles +
                 ", address=" + address +
                 ", orders=" + orders +
                 '}';

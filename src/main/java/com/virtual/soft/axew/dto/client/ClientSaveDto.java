@@ -1,26 +1,29 @@
 package com.virtual.soft.axew.dto.client;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Set;
 
 public class ClientSaveDto {
 
     @Schema(example = "Client name")
-    @NotNull
+    @NotEmpty
     private String name;
 
     @Schema(example = "000.000.000-00")
-    @Size(min = 14, max = 14)
+    @CPF(message = "Invalid format of CPF")
     private String cpf;
 
     @Schema(example = "myemail@test.com")
-    @NotNull
+    @NotEmpty
     private String email;
 
-    @Schema(example = "mypassword")
+    @Schema(example = "my_password")
     @Size(min = 5, max = 30)
     private String password;
 
@@ -33,20 +36,24 @@ public class ClientSaveDto {
     private LocalDate birthDate;
 
     @Schema(example = "Street one")
-    @NotNull
+    @NotEmpty
     private String street;
 
     @Schema(example = "105A")
-    @NotNull
+    @NotEmpty
     private String number;
 
     @Schema(example = "district one")
-    @NotNull
+    @NotEmpty
     private String district;
 
     @Schema(example = "00000-000")
-    @NotNull
+    @NotEmpty
     private String zipCode;
+
+    @Schema(example = "[\"ROLE_ADMIN\",\"ROLE_USER\"]")
+    @NotNull
+    private Set<String> roles;
 
     public ClientSaveDto () {
         // Do nothing
@@ -92,4 +99,7 @@ public class ClientSaveDto {
         return zipCode;
     }
 
+    public Set<String> getRoles () {
+        return roles;
+    }
 }

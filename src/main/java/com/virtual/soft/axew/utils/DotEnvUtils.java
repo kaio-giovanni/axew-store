@@ -16,7 +16,27 @@ public class DotEnvUtils {
     }
 
     public static String getSentryDsn () {
-        return dotenv.get("SENTRY_DSN");
+        return dotenv.get("SENTRY_DSN", "");
+    }
+
+    public static String getDatabaseUrl () {
+        return dotenv.get("DB_URL");
+    }
+
+    public static String getDatabaseUserName () {
+        return dotenv.get("DB_USERNAME");
+    }
+
+    public static String getDatabasePassword () {
+        return dotenv.get("DB_PASSWORD");
+    }
+
+    public static String getJwtSecret () {
+        return dotenv.get("JWT_SECRET", "AbCdEfGhIYxZ");
+    }
+
+    public static String getJwtExpiration () {
+        return dotenv.get("JWT_EXPIRATION");
     }
 
     public static String getAwsAccessKeyId () {
