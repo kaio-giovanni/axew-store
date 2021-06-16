@@ -27,7 +27,17 @@ public enum RoleEnum {
             }
         }
 
-        throw new IllegalArgumentException("Invalid RoleEnum");
+        throw new IllegalArgumentException("Invalid Role: " + id);
+    }
+
+    public static RoleEnum toEnum (String code) {
+        for (RoleEnum roleEnum : RoleEnum.values()) {
+            if (roleEnum.getCode().equals(code)) {
+                return roleEnum;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid Role: " + code);
     }
 
     @Override

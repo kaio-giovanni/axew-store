@@ -35,7 +35,7 @@ public class JwtAuth {
         }
 
         String[] tokenHeader = token.split(" ");
-        if (tokenHeader.length < 2) {
+        if (tokenHeader.length != 2) {
             return false;
         }
         if (!tokenHeader[0].equals(TOKEN_PREFIX.trim())) {

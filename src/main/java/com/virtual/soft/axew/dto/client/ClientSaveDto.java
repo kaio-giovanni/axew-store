@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Set;
 
 public class ClientSaveDto {
 
@@ -49,6 +50,10 @@ public class ClientSaveDto {
     @Schema(example = "00000-000")
     @NotEmpty
     private String zipCode;
+
+    @Schema(example = "[\"ROLE_ADMIN\",\"ROLE_USER\"]")
+    @NotNull
+    private Set<String> roles;
 
     public ClientSaveDto () {
         // Do nothing
@@ -94,4 +99,7 @@ public class ClientSaveDto {
         return zipCode;
     }
 
+    public Set<String> getRoles () {
+        return roles;
+    }
 }

@@ -67,6 +67,7 @@ public class ClientService {
                 c.getDistrict(), c.getZipCode())
                 .setClient(client);
         client.setAddress(address);
+        c.getRoles().forEach(code -> client.addRole(RoleEnum.toEnum(code)));
 
         return client;
     }
