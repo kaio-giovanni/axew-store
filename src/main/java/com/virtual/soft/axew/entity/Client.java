@@ -39,7 +39,8 @@ public class Client implements Serializable {
     @CollectionTable(name = "ROLES")
     private final Set<Integer> roles = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Address address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
@@ -165,7 +166,7 @@ public class Client implements Serializable {
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", birthDate=" + birthDate +
-                ", roles=" + roles +
+                ", roles=" + roles.stream().iterator() +
                 ", address=" + address +
                 ", orders=" + orders +
                 '}';

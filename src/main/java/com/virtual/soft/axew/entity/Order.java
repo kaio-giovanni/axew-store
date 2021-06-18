@@ -105,7 +105,7 @@ public class Order implements Serializable {
                 "id=" + id +
                 ", moment=" + moment +
                 ", orderStatus=" + orderStatus +
-                ", client=" + client +
+                ", client=" + client.getName() +
                 ", items=" + items +
                 '}';
     }

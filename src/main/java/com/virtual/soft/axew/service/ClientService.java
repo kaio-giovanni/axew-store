@@ -27,9 +27,6 @@ public class ClientService {
     private ClientRepository repository;
 
     @Autowired
-    private AddressService addressService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public Page<Client> findAll (int page, int size) {
@@ -54,7 +51,6 @@ public class ClientService {
 
     @Transactional
     public Client save (Client client) {
-        addressService.save(client.getAddress());
         return repository.save(client);
     }
 

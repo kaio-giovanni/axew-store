@@ -6,19 +6,23 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class AddressDto {
 
     @Schema(example = "10")
-    private final Long id;
+    private Long id;
 
     @Schema(example = "Street one")
-    private final String street;
+    private String street;
 
     @Schema(example = "1010")
-    private final String number;
+    private String number;
 
     @Schema(example = "District one")
-    private final String district;
+    private String district;
 
     @Schema(example = "8008-080")
-    private final String zipCode;
+    private String zipCode;
+
+    public AddressDto () {
+        // Do nothing
+    }
 
     public AddressDto (Address address) {
         id = address.getId();
