@@ -1,9 +1,9 @@
 package com.virtual.soft.axew.service;
 
 import com.virtual.soft.axew.dto.product.ProductSaveDto;
-import com.virtual.soft.axew.exception.ResourceNotFoundException;
 import com.virtual.soft.axew.entity.Category;
 import com.virtual.soft.axew.entity.Product;
+import com.virtual.soft.axew.exception.ResourceNotFoundException;
 import com.virtual.soft.axew.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
@@ -37,6 +38,7 @@ public class ProductService {
         return new PageImpl<>(products.getContent(), pageable, products.getTotalElements());
     }
 
+    @Transactional
     public Product save (Product p) {
         return repository.save(p);
     }

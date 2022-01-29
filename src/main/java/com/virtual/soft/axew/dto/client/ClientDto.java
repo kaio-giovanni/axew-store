@@ -11,28 +11,32 @@ import java.util.Set;
 public class ClientDto {
 
     @Schema(example = "1")
-    private final Long id;
+    private Long id;
 
     @Schema(example = "User name")
-    private final String name;
+    private String name;
 
     @Schema(example = "000.000.000-00")
-    private final String cpf;
+    private String cpf;
 
     @Schema(example = "User email")
-    private final String email;
+    private String email;
 
     @Schema(example = "12334556")
-    private final String phone;
+    private String phone;
 
     @Schema(example = "2000-01-01")
-    private final LocalDate birthDate;
+    private LocalDate birthDate;
 
     @Schema
-    private final AddressDto address;
+    private AddressDto address;
 
     @Schema(example = "[\"ADMIN\",\"USER\"]")
-    private final Set<RoleEnum> roles;
+    private Set<RoleEnum> roles;
+
+    public ClientDto () {
+        // Do nothing
+    }
 
     public ClientDto (Client client) {
         id = client.getId();

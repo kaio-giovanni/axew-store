@@ -16,7 +16,7 @@ public class ClientSaveDto {
     private String name;
 
     @Schema(example = "000.000.000-00")
-    @CPF(message = "Invalid format of CPF")
+    @CPF
     private String cpf;
 
     @Schema(example = "myemail@test.com")
@@ -28,7 +28,7 @@ public class ClientSaveDto {
     private String password;
 
     @Schema(example = "+55 00 99999-9999")
-    @Size(min = 17, max = 17)
+    @Size(min = 15, max = 17)
     private String phone;
 
     @Schema(example = "2000-01-01")
