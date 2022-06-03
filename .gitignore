@@ -146,6 +146,7 @@ gradle-app.setting
 .classpath
 .project
 /bin/main
+/bin/test
 .settings
 
 ### SSH

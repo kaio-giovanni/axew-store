@@ -1,6 +1,6 @@
 # AXEW STORE
 
-A API REST created using spring-boot with Java 11.
+An API REST created using spring-boot with Java 11.
 
 #### Status
 

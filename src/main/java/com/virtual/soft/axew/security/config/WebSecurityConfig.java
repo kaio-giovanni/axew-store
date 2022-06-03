@@ -32,7 +32,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] GET_PUBLIC_MATCHERS = new String[]{
             "/category/**",
-            "/product/**"
+            "/product/**",
+            "/v2/api-docs/**",
+            "/v3/api-docs/**",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/openapi/**",
+            "/swagger-ui-custom.html",
+            "/webjars/**"
     };
 
     @Override
