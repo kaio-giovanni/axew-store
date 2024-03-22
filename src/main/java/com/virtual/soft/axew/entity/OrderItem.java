@@ -21,54 +21,54 @@ public class OrderItem implements Serializable {
     @Column(nullable = false)
     private double price;
 
-    public OrderItem () {
+    public OrderItem() {
     }
 
-    public OrderItem (Order order, Product product, Integer quantity, double price) {
+    public OrderItem(Order order, Product product, Integer quantity, double price) {
         id.setProduct(product);
         id.setOrder(order);
         this.quantity = quantity;
         this.price = price;
     }
 
-    public Order getOrder () {
+    public Order getOrder() {
         return id.getOrder();
     }
 
-    public void setOrder (Order order) {
+    public void setOrder(Order order) {
         id.setOrder(order);
     }
 
-    public Product getProduct () {
+    public Product getProduct() {
         return id.getProduct();
     }
 
-    public void setProduct (Product product) {
+    public void setProduct(Product product) {
         id.setProduct(product);
     }
 
-    public Integer getQuantity () {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity (Integer quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public double getPrice () {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice (double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public Double getSubTotal () {
+    public Double getSubTotal() {
         return price * quantity;
     }
 
     @Override
-    public boolean equals (Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItem orderItem = (OrderItem) o;
@@ -76,12 +76,12 @@ public class OrderItem implements Serializable {
     }
 
     @Override
-    public int hashCode () {
+    public int hashCode() {
         return Objects.hash(id);
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return "OrderItem{" +
                 "id=" + id +
                 ", quantity=" + quantity +

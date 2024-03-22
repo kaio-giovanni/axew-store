@@ -9,8 +9,8 @@ An API REST created using spring-boot with Java 11.
 #### Dependencies
 
 - git
-- Java 11
-- gradle ^6.8
+- Java 17
+- gradle ^7.2
 
 #### Project setup
 

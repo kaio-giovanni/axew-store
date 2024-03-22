@@ -1,13 +1,12 @@
-package com.virtual.soft.axew.dto.client;
+package com.virtual.soft.axew.dto.address;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
-public class ClientPageDto {
-
+public class AddressPageDto {
     @Schema
-    private List<ClientDto> clients;
+    private List<AddressDto> addresses;
 
     @Schema(example = "20")
     private int totalPages;
@@ -18,16 +17,16 @@ public class ClientPageDto {
     @Schema(example = "10")
     private long numberOfElements;
 
-    public ClientPageDto() {
+    public AddressPageDto() {
         // Do nothing
     }
 
-    public List<ClientDto> getClients() {
-        return clients;
+    public List<AddressDto> getAddresses() {
+        return addresses;
     }
 
-    public ClientPageDto setClients(List<ClientDto> clients) {
-        this.clients = clients;
+    public AddressPageDto addresses(List<AddressDto> addresses) {
+        this.addresses = addresses;
         return this;
     }
 
@@ -35,7 +34,7 @@ public class ClientPageDto {
         return totalPages;
     }
 
-    public ClientPageDto totalPages(int totalPages) {
+    public AddressPageDto totalPages(int totalPages) {
         this.totalPages = totalPages;
         return this;
     }
@@ -44,7 +43,7 @@ public class ClientPageDto {
         return totalElements;
     }
 
-    public ClientPageDto totalElements(long totalElements) {
+    public AddressPageDto totalElements(long totalElements) {
         this.totalElements = totalElements;
         return this;
     }
@@ -53,7 +52,7 @@ public class ClientPageDto {
         return numberOfElements;
     }
 
-    public ClientPageDto numberOfElements(long numberOfElements) {
+    public AddressPageDto numberOfElements(long numberOfElements) {
         this.numberOfElements = numberOfElements;
         return this;
     }

@@ -19,24 +19,24 @@ public class OrderItemKey implements Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public Order getOrder () {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder (Order order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
-    public Product getProduct () {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct (Product product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 
     @Override
-    public boolean equals (Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItemKey that = (OrderItemKey) o;
@@ -44,7 +44,7 @@ public class OrderItemKey implements Serializable {
     }
 
     @Override
-    public int hashCode () {
+    public int hashCode() {
         return Objects.hash(order, product);
     }
 }

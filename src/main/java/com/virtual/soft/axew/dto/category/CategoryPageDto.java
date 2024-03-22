@@ -18,42 +18,42 @@ public class CategoryPageDto {
     @Schema(example = "10")
     private long numberOfElements;
 
-    public CategoryPageDto () {
+    public CategoryPageDto() {
         // Do nothing
     }
 
-    public List<CategoryDto> getCategories () {
+    public List<CategoryDto> getCategories() {
         return categories;
     }
 
-    public int getTotalPages () {
+    public int getTotalPages() {
         return totalPages;
     }
 
-    public long getTotalElements () {
+    public long getTotalElements() {
         return totalElements;
     }
 
-    public long getNumberOfElements () {
+    public long getNumberOfElements() {
         return numberOfElements;
     }
 
-    public CategoryPageDto categories (List<CategoryDto> categories) {
+    public CategoryPageDto categories(List<CategoryDto> categories) {
         this.categories = categories;
         return this;
     }
 
-    public CategoryPageDto totalPages (int totalPages) {
+    public CategoryPageDto totalPages(int totalPages) {
         this.totalPages = totalPages;
         return this;
     }
 
-    public CategoryPageDto totalElements (long totalElements) {
+    public CategoryPageDto totalElements(long totalElements) {
         this.totalElements = totalElements;
         return this;
     }
 
-    public CategoryPageDto numberOfElements (long numberOfElements) {
+    public CategoryPageDto numberOfElements(long numberOfElements) {
         this.numberOfElements = numberOfElements;
         return this;
     }

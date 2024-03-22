@@ -31,54 +31,59 @@ public class Order implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
 
-    public Order () {
+    public Order() {
     }
 
-    public Order (Instant moment, OrderStatus orderStatus, Client client) {
+    public Order(Instant moment, OrderStatus orderStatus, Client client) {
         this.moment = moment;
         setOrderStatus(orderStatus);
         this.client = client;
     }
 
-    public Long getId () {
+    public Long getId() {
         return id;
     }
 
-    public void setId (Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Instant getMoment () {
+    public Instant getMoment() {
         return moment;
     }
 
-    public void setMoment (Instant moment) {
+    public void setMoment(Instant moment) {
         this.moment = moment;
     }
 
-    public OrderStatus getOrderStatus () {
+    public OrderStatus getOrderStatus() {
         return OrderStatus.toEnum(orderStatus);
     }
 
-    public void setOrderStatus (OrderStatus orderStatus) {
+    public void setOrderStatus(OrderStatus orderStatus) {
         if (orderStatus != null) {
             this.orderStatus = orderStatus.getCode();
         }
     }
 
-    public Client getClient () {
+    public Client getClient() {
         return client;
     }
 
-    public void setClient (Client client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 
-    public Set<OrderItem> getItems () {
+    public Set<OrderItem> getItems() {
         return items;
     }
 
-    public double getTotal () {
+    public Order setItems(Set<OrderItem> items) {
+        this.items = items;
+        return this;
+    }
+
+    public double getTotal() {
         var total = 0.0;
         for (OrderItem item : items) {
             total += item.getSubTotal();
@@ -87,7 +92,7 @@ public class Order implements Serializable {
     }
 
     @Override
-    public boolean equals (Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
@@ -95,12 +100,12 @@ public class Order implements Serializable {
     }
 
     @Override
-    public int hashCode () {
+    public int hashCode() {
         return Objects.hash(id);
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", moment=" + moment +

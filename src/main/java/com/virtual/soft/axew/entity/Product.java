@@ -36,70 +36,70 @@ public class Product implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.product")
     private Set<OrderItem> items = new HashSet<>();
 
-    public Product () {
+    public Product() {
     }
 
-    public Product (String name, String description, double price) {
+    public Product(String name, String description, double price) {
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public Long getId () {
+    public Long getId() {
         return id;
     }
 
-    public Product setId (Long id) {
+    public Product setId(Long id) {
         this.id = id;
         return this;
     }
 
-    public String getName () {
+    public String getName() {
         return name;
     }
 
-    public Product setName (String name) {
+    public Product setName(String name) {
         this.name = name;
         return this;
     }
 
-    public String getDescription () {
+    public String getDescription() {
         return description;
     }
 
-    public Product setDescription (String description) {
+    public Product setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public double getPrice () {
+    public double getPrice() {
         return price;
     }
 
-    public Product setPrice (double price) {
+    public Product setPrice(double price) {
         this.price = price;
         return this;
     }
 
-    public String getImgUrl () {
+    public String getImgUrl() {
         return imgUrl;
     }
 
-    public Product setImgUrl (String imgUrl) {
+    public Product setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
         return this;
     }
 
-    public Set<Category> getCategories () {
+    public Set<Category> getCategories() {
         return categories;
     }
 
-    public Product setCategories (Set<Category> categories) {
+    public Product setCategories(Set<Category> categories) {
         this.categories = categories;
         return this;
     }
 
-    public Set<Order> getOrders () {
+    public Set<Order> getOrders() {
         Set<Order> set = new HashSet<>();
         for (OrderItem x : items) {
             set.add(x.getOrder());
@@ -108,7 +108,7 @@ public class Product implements Serializable {
     }
 
     @Override
-    public boolean equals (Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
@@ -116,12 +116,12 @@ public class Product implements Serializable {
     }
 
     @Override
-    public int hashCode () {
+    public int hashCode() {
         return Objects.hash(id);
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

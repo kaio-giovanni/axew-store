@@ -115,7 +115,7 @@ class SaveTest {
 
     public ResultActions callEndpoint (ClientSaveDto payload) throws Exception {
         return mockMvc.perform(MockMvcRequestBuilders
-                .post("/client")
+                .post("/client/save")
                 .content(objectMapper.writeValueAsString(payload))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.CONTENT_TYPE,

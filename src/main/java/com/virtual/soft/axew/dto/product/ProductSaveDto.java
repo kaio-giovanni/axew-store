@@ -30,27 +30,27 @@ public class ProductSaveDto {
     @NotNull
     private List<Long> categoryIds;
 
-    public ProductSaveDto () {
+    public ProductSaveDto() {
         // Do nothing
     }
 
-    public String getName () {
+    public String getName() {
         return name;
     }
 
-    public String getDescription () {
+    public String getDescription() {
         return description;
     }
 
-    public double getPrice () {
+    public double getPrice() {
         return price;
     }
 
-    public String getImgUrl () {
+    public String getImgUrl() {
         return imgUrl;
     }
 
-    public List<Long> getCategoryIds () {
+    public List<Long> getCategoryIds() {
         return categoryIds;
     }
 }

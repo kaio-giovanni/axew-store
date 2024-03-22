@@ -4,6 +4,7 @@ import com.virtual.soft.axew.dto.error.ErrorDto;
 import com.virtual.soft.axew.exception.AuthorizationException;
 import com.virtual.soft.axew.exception.ResourceNotFoundException;
 import com.virtual.soft.axew.utils.SentryUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import java.time.Instant;
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorDto> exceptionHandler (Exception exception, HttpServletRequest request) {
+    public ResponseEntity<ErrorDto> exceptionHandler(Exception exception, HttpServletRequest request) {
         if (isAccessDenied(exception)) {
             ErrorDto dto = makeAccessDeniedError(request, exception);
             return new ResponseEntity<>(dto, HttpStatus.FORBIDDEN);
@@ -35,21 +36,25 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         }
     }
 
+    @NotNull
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable (HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(@NotNull HttpMessageNotReadableException ex,
+                                                                  @NotNull HttpHeaders headers,
+                                                                  @NotNull HttpStatus status,
+                                                                  @NotNull WebRequest request) {
         HttpServletRequest servletRequest = ((ServletWebRequest) request).getRequest();
         ErrorDto dto = makeBadRequestError(servletRequest, status, ex);
         return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
     }
 
-    private ErrorDto makeBadRequestError (HttpServletRequest request, HttpStatus status, Exception exception) {
+    private ErrorDto makeBadRequestError(HttpServletRequest request, HttpStatus status, Exception exception) {
         final String message = "BAD REQUEST!! Check your request and try again";
         return new ErrorDto(Instant.now(), status.value(), message)
                 .setMessage(exception.getMessage())
                 .setPath(request.getRequestURI());
     }
 
-    private ErrorDto makeAccessDeniedError (HttpServletRequest request, Exception exception) {
+    private ErrorDto makeAccessDeniedError(HttpServletRequest request, Exception exception) {
         final String message = "FORBIDDEN!! Sorry, you are not authorized to access this feature";
         final HttpStatus status = HttpStatus.FORBIDDEN;
         return new ErrorDto(Instant.now(), status.value(), message)
@@ -57,7 +62,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 .setPath(request.getRequestURI());
     }
 
-    private ErrorDto makeNotFoundResource (HttpServletRequest request, Exception exception) {
+    private ErrorDto makeNotFoundResource(HttpServletRequest request, Exception exception) {
         final String message = "NOT FOUND! Verify your request and try again";
         final HttpStatus status = HttpStatus.NOT_FOUND;
         return new ErrorDto(Instant.now(), status.value(), message)
@@ -65,7 +70,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 .setPath(request.getRequestURI());
     }
 
-    private ErrorDto makeInternalError (HttpServletRequest request, Exception exception) {
+    private ErrorDto makeInternalError(HttpServletRequest request, Exception exception) {
         final String message = "INTERNAL ERROR!! Sorry, something went wrong. Please, try again";
         final HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         SentryUtils sentryUtils = new SentryUtils();
@@ -75,12 +80,12 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 .setPath(request.getRequestURI());
     }
 
-    private boolean isAccessDenied (Exception exception) {
+    private boolean isAccessDenied(Exception exception) {
         return exception instanceof AccessDeniedException ||
                 exception instanceof AuthorizationException;
     }
 
-    private boolean isResourceNotFound (Exception exception) {
+    private boolean isResourceNotFound(Exception exception) {
         return exception instanceof ResourceNotFoundException;
     }
 

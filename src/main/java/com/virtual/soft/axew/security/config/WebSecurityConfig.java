@@ -24,11 +24,20 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private UserAuthService userAuthService;
+    private JwtAuth jwtAuth;
 
     @Autowired
-    private JwtAuth jwtAuth;
+    public WebSecurityConfig(UserAuthService userAuthService, JwtAuth jwtAuth) {
+        this.userAuthService = userAuthService;
+        this.jwtAuth = jwtAuth;
+    }
+
+    public WebSecurityConfig(boolean disableDefaults, UserAuthService userAuthService, JwtAuth jwtAuth) {
+        super(disableDefaults);
+        this.userAuthService = userAuthService;
+        this.jwtAuth = jwtAuth;
+    }
 
     private static final String[] GET_PUBLIC_MATCHERS = new String[]{
             "/category/**",
@@ -44,13 +53,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**"
     };
 
+    private static final String[] POST_PUBLIC_MATCHERS = new String[]{
+            "/client/save",
+            "/address/save"
+    };
+
     @Override
-    protected void configure (HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors()
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, POST_PUBLIC_MATCHERS).permitAll()
                 .antMatchers(HttpMethod.GET, GET_PUBLIC_MATCHERS).permitAll()
                 .anyRequest()
                 .authenticated();
@@ -63,12 +78,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure (AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userAuthService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource () {
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedHeader("*");
@@ -85,7 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder () {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
 }

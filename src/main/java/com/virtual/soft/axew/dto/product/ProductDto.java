@@ -20,10 +20,10 @@ public class ProductDto {
     @Schema(example = "www.domain.com/img-url")
     private String imgUrl;
 
-    public ProductDto () {
+    public ProductDto() {
     }
 
-    public ProductDto (Product product) {
+    public ProductDto(Product product) {
         id = product.getId();
         name = product.getName();
         description = product.getDescription();
@@ -31,23 +31,23 @@ public class ProductDto {
         imgUrl = product.getImgUrl();
     }
 
-    public Long getId () {
+    public Long getId() {
         return id;
     }
 
-    public String getName () {
+    public String getName() {
         return name;
     }
 
-    public String getDescription () {
+    public String getDescription() {
         return description;
     }
 
-    public Double getPrice () {
+    public Double getPrice() {
         return price;
     }
 
-    public String getImgUrl () {
+    public String getImgUrl() {
         return imgUrl;
     }
 }

@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +23,11 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/category")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService service;
+    private final CategoryService service;
+
+    public CategoryController(CategoryService service) {
+        this.service = service;
+    }
 
     @GetMapping(value = "")
     @Operation(summary = "Get a paginated list of categories")
@@ -33,7 +35,7 @@ public class CategoryController {
             description = "Categories paginated",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CategoryPageDto.class))})})
-    public ResponseEntity<CategoryPageDto> findAll (
+    public ResponseEntity<CategoryPageDto> findAll(
             @Schema(example = "1")
             @RequestParam(name = "page", defaultValue = "0") int page,
             @Schema(example = "10")
@@ -59,7 +61,7 @@ public class CategoryController {
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CategoryDto.class))})
     })
-    public ResponseEntity<CategoryDto> findById (@PathVariable Long id) {
+    public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
         Category category = service.findById(id);
         CategoryDto dto = new CategoryDto(category);
 
@@ -72,7 +74,7 @@ public class CategoryController {
             description = "Categories paginated",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CategoryPageDto.class))})})
-    public ResponseEntity<CategoryPageDto> findByName (
+    public ResponseEntity<CategoryPageDto> findByName(
             @RequestParam(name = "name") String name,
             @Schema(example = "1")
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -98,7 +100,7 @@ public class CategoryController {
             description = "Category data",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CategoryDto.class))})})
-    public ResponseEntity<CategoryDto> save (@Valid @RequestBody CategorySaveDto newCategory) {
+    public ResponseEntity<CategoryDto> save(@Valid @RequestBody CategorySaveDto newCategory) {
         Category category = service.convertFromDto(newCategory);
         Category categorySaved = service.save(category);
         CategoryDto dto = new CategoryDto(categorySaved);

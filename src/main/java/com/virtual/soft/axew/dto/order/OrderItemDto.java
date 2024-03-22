@@ -15,24 +15,24 @@ public class OrderItemDto {
     @Schema(example = "100")
     private Double price;
 
-    public OrderItemDto () {
+    public OrderItemDto() {
     }
 
-    public OrderItemDto (OrderItem orderItem) {
+    public OrderItemDto(OrderItem orderItem) {
         product = new ProductDto(orderItem.getProduct());
         quantity = orderItem.getQuantity();
         price = orderItem.getPrice();
     }
 
-    public ProductDto getProduct () {
+    public ProductDto getProduct() {
         return product;
     }
 
-    public Integer getQuantity () {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public Double getPrice () {
+    public Double getPrice() {
         return price;
     }
 }

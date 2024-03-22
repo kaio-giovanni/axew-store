@@ -20,7 +20,7 @@ public class JwtAuth {
     @Value("${jwt.expiration}")
     private Long jwtExpiration;
 
-    public String makeToken (String userName) {
+    public String makeToken(String userName) {
         return Jwts.builder()
                 .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -29,7 +29,7 @@ public class JwtAuth {
                 .compact();
     }
 
-    public boolean isValid (String token) {
+    public boolean isValid(String token) {
         if (token == null) {
             return false;
         }
@@ -53,7 +53,7 @@ public class JwtAuth {
         return expiration.after(now);
     }
 
-    private Claims getClaims (String token) {
+    private Claims getClaims(String token) {
         try {
             return Jwts.parser()
                     .setSigningKey(jwtSecret.getBytes())
@@ -64,16 +64,16 @@ public class JwtAuth {
         }
     }
 
-    public String getUserName (String token) {
+    public String getUserName(String token) {
         Claims claims = getClaims(token);
         return claims == null ? null : claims.getSubject();
     }
 
-    public String getHeaderAuth () {
+    public String getHeaderAuth() {
         return HEADER_AUTH;
     }
 
-    public String getTokenPrefix () {
+    public String getTokenPrefix() {
         return TOKEN_PREFIX;
     }
 }

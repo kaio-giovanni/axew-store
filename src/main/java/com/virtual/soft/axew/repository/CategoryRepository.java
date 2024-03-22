@@ -13,6 +13,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query(nativeQuery = true,
             value = "SELECT * FROM categories WHERE name LIKE CONCAT('%', :name, '%')")
-    Page<Category> findByName (@Param("name") String name, Pageable pageable);
+    Page<Category> findByName(@Param("name") String name, Pageable pageable);
 
 }

@@ -34,11 +34,11 @@ public class ClientDto {
     @Schema(example = "[\"ADMIN\",\"USER\"]")
     private Set<RoleEnum> roles;
 
-    public ClientDto () {
+    public ClientDto() {
         // Do nothing
     }
 
-    public ClientDto (Client client) {
+    public ClientDto(Client client) {
         id = client.getId();
         name = client.getName();
         cpf = client.getCpf();
@@ -49,35 +49,35 @@ public class ClientDto {
         address = new AddressDto(client.getAddress());
     }
 
-    public Long getId () {
+    public Long getId() {
         return id;
     }
 
-    public String getName () {
+    public String getName() {
         return name;
     }
 
-    public String getCpf () {
+    public String getCpf() {
         return cpf;
     }
 
-    public String getEmail () {
+    public String getEmail() {
         return email;
     }
 
-    public String getPhone () {
+    public String getPhone() {
         return phone;
     }
 
-    public LocalDate getBirthDate () {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public Set<RoleEnum> getRoles () {
+    public Set<RoleEnum> getRoles() {
         return roles;
     }
 
-    public AddressDto getAddress () {
+    public AddressDto getAddress() {
         return address;
     }
 }

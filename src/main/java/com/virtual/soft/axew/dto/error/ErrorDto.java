@@ -22,39 +22,39 @@ public class ErrorDto {
     @Schema(example = "/url")
     private String path;
 
-    public ErrorDto (Instant timestamp, Integer status, String error) {
+    public ErrorDto(Instant timestamp, Integer status, String error) {
         this.timestamp = timestamp;
         this.status = status;
         this.error = error;
     }
 
-    public ErrorDto setMessage (String message) {
+    public ErrorDto setMessage(String message) {
         this.message = message;
         return this;
     }
 
-    public ErrorDto setPath (String path) {
+    public ErrorDto setPath(String path) {
         this.path = path;
         return this;
     }
 
-    public Instant getTimestamp () {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
-    public Integer getStatus () {
+    public Integer getStatus() {
         return status;
     }
 
-    public String getError () {
+    public String getError() {
         return error;
     }
 
-    public String getMessage () {
+    public String getMessage() {
         return message;
     }
 
-    public String getPath () {
+    public String getPath() {
         return path;
     }
 }

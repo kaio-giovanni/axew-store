@@ -1,39 +1,28 @@
 package com.virtual.soft.axew.dto.address;
 
-import com.virtual.soft.axew.entity.Address;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public class AddressDto {
+import javax.validation.constraints.NotEmpty;
 
-    @Schema(example = "10")
-    private Long id;
+public class AddressSaveDto {
 
     @Schema(example = "Street one")
+    @NotEmpty
     private String street;
 
     @Schema(example = "1010")
+    @NotEmpty
     private String number;
 
     @Schema(example = "District one")
+    @NotEmpty
     private String district;
 
     @Schema(example = "8008-080")
+    @NotEmpty
     private String zipCode;
 
-    public AddressDto() {
-        // Do nothing
-    }
-
-    public AddressDto(Address address) {
-        id = address.getId();
-        street = address.getStreet();
-        number = address.getNumber();
-        district = address.getDistrict();
-        zipCode = address.getZipCode();
-    }
-
-    public Long getId() {
-        return id;
+    public AddressSaveDto() {
     }
 
     public String getStreet() {
@@ -51,4 +40,5 @@ public class AddressDto {
     public String getZipCode() {
         return zipCode;
     }
+
 }

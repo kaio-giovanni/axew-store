@@ -22,7 +22,7 @@ public class FakeUtils {
                     .setPhone("69 90000-0000" + id)
                     .setPassword(userPass);
             Address addressFake = new Address("street" + id, "number", "district" + id, "1239879")
-                    .setClient(c);
+                    .addClient(c);
             c.setAddress(addressFake);
 
             clients.add(c);
@@ -38,7 +38,7 @@ public class FakeUtils {
                 .setPhone("Cell phone " + id)
                 .setPassword("fake pass");
         Address addressFake = new Address("street" + id, "number", "district" + id, "1239879")
-                .setClient(client);
+                .addClient(client);
         client.setAddress(addressFake);
 
         return client;

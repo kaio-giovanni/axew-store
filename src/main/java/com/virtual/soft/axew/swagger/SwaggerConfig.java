@@ -1,6 +1,8 @@
 package com.virtual.soft.axew.swagger;
 
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.info.Info;
@@ -10,13 +12,20 @@ import io.swagger.v3.oas.models.parameters.Parameter;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.method.HandlerMethod;
 
 @Configuration
+@SecurityScheme(
+        name = "Bearer Authentication",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "bearer"
+)
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI customOpenAPI () {
+    public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
                         .title("Axew Store API")
@@ -26,15 +35,17 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public OperationCustomizer customGlobalHeaders () {
+    public OperationCustomizer customGlobalHeaders() {
         return (Operation operation, HandlerMethod handlerMethod) -> {
-            operation.addParametersItem(makeAuthorization());
+            if (handlerMethod.hasMethodAnnotation(PreAuthorize.class)) {
+                operation.addParametersItem(makeAuthorization());
+            }
 
             return operation;
         };
     }
 
-    private Parameter makeAuthorization () {
+    private Parameter makeAuthorization() {
         return new Parameter().in(ParameterIn.HEADER.toString())
                 .name("Jwt Token")
                 .description("Authorization token")

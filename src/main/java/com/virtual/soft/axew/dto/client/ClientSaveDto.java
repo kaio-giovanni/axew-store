@@ -35,71 +35,47 @@ public class ClientSaveDto {
     @NotNull
     private LocalDate birthDate;
 
-    @Schema(example = "Street one")
-    @NotEmpty
-    private String street;
-
-    @Schema(example = "105A")
-    @NotEmpty
-    private String number;
-
-    @Schema(example = "district one")
-    @NotEmpty
-    private String district;
-
-    @Schema(example = "00000-000")
-    @NotEmpty
-    private String zipCode;
+    @Schema(example = "10")
+    @NotNull
+    private Long addressId;
 
     @Schema(example = "[\"ROLE_ADMIN\",\"ROLE_USER\"]")
     @NotNull
     private Set<String> roles;
 
-    public ClientSaveDto () {
+    public ClientSaveDto() {
         // Do nothing
     }
 
-    public String getName () {
+    public String getName() {
         return name;
     }
 
-    public String getCpf () {
+    public String getCpf() {
         return cpf;
     }
 
-    public String getEmail () {
+    public String getEmail() {
         return email;
     }
 
-    public String getPassword () {
+    public String getPassword() {
         return password;
     }
 
-    public String getPhone () {
+    public String getPhone() {
         return phone;
     }
 
-    public LocalDate getBirthDate () {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public String getStreet () {
-        return street;
+    public Long getAddressId() {
+        return addressId;
     }
 
-    public String getNumber () {
-        return number;
-    }
-
-    public String getDistrict () {
-        return district;
-    }
-
-    public String getZipCode () {
-        return zipCode;
-    }
-
-    public Set<String> getRoles () {
+    public Set<String> getRoles() {
         return roles;
     }
 }

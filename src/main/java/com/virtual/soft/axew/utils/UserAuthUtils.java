@@ -5,11 +5,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class UserAuthUtils {
 
-    private UserAuthUtils () {
+    private UserAuthUtils() {
         // Do nothing
     }
 
-    public static UserAuth getAuthenticatedUser () {
+    public static UserAuth getAuthenticatedUser() {
         return (UserAuth) SecurityContextHolder
                 .getContext()
                 .getAuthentication()

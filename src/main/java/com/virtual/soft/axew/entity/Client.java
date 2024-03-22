@@ -39,112 +39,112 @@ public class Client implements Serializable {
     @CollectionTable(name = "ROLES")
     private final Set<Integer> roles = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client",
+    @ManyToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Address address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private final List<Order> orders = new ArrayList<>();
 
-    public Client () {
+    public Client() {
         addRole(RoleEnum.USER);
     }
 
-    public Client (String name, String cpf, String email) {
+    public Client(String name, String cpf, String email) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
         addRole(RoleEnum.USER);
     }
 
-    public Long getId () {
+    public Long getId() {
         return id;
     }
 
-    public Client setId (Long id) {
+    public Client setId(Long id) {
         this.id = id;
         return this;
     }
 
-    public String getName () {
+    public String getName() {
         return name;
     }
 
-    public Client setName (String name) {
+    public Client setName(String name) {
         this.name = name;
         return this;
     }
 
-    public String getCpf () {
+    public String getCpf() {
         return cpf;
     }
 
-    public Client setCpf (String cpf) {
+    public Client setCpf(String cpf) {
         this.cpf = cpf;
         return this;
     }
 
-    public String getEmail () {
+    public String getEmail() {
         return email;
     }
 
-    public Client setEmail (String email) {
+    public Client setEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public String getPassword () {
+    public String getPassword() {
         return password;
     }
 
-    public Client setPassword (String password) {
+    public Client setPassword(String password) {
         this.password = password;
         return this;
     }
 
-    public String getPhone () {
+    public String getPhone() {
         return phone;
     }
 
-    public Client setPhone (String phone) {
+    public Client setPhone(String phone) {
         this.phone = phone;
         return this;
     }
 
-    public LocalDate getBirthDate () {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public Client setBirthDate (LocalDate birthDate) {
+    public Client setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
         return this;
     }
 
-    public Set<RoleEnum> getRoles () {
+    public Set<RoleEnum> getRoles() {
         return roles.stream()
                 .map(RoleEnum::toEnum)
                 .collect(Collectors.toSet());
     }
 
-    public void addRole (RoleEnum role) {
+    public void addRole(RoleEnum role) {
         roles.add(role.getId());
     }
 
-    public Address getAddress () {
+    public Address getAddress() {
         return address;
     }
 
-    public Client setAddress (Address address) {
+    public Client setAddress(Address address) {
         this.address = address;
         return this;
     }
 
-    public List<Order> getOrders () {
+    public List<Order> getOrders() {
         return orders;
     }
 
     @Override
-    public boolean equals (Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
@@ -152,12 +152,12 @@ public class Client implements Serializable {
     }
 
     @Override
-    public int hashCode () {
+    public int hashCode() {
         return Objects.hash(id);
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return "Client{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
