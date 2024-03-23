@@ -7,20 +7,20 @@ public enum RoleEnum {
     private final int id;
     private final String code;
 
-    RoleEnum (int id, String code) {
+    RoleEnum(int id, String code) {
         this.id = id;
         this.code = code;
     }
 
-    public int getId () {
+    public int getId() {
         return id;
     }
 
-    public String getCode () {
+    public String getCode() {
         return code;
     }
 
-    public static RoleEnum toEnum (int id) {
+    public static RoleEnum toEnum(int id) {
         for (RoleEnum roleEnum : RoleEnum.values()) {
             if (roleEnum.getId() == id) {
                 return roleEnum;
@@ -30,7 +30,7 @@ public enum RoleEnum {
         throw new IllegalArgumentException("Invalid Role: " + id);
     }
 
-    public static RoleEnum toEnum (String code) {
+    public static RoleEnum toEnum(String code) {
         for (RoleEnum roleEnum : RoleEnum.values()) {
             if (roleEnum.getCode().equals(code)) {
                 return roleEnum;
@@ -41,7 +41,7 @@ public enum RoleEnum {
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return "RoleEnum{" +
                 "id=" + id +
                 ", code='" + code + '\'' +

@@ -6,7 +6,7 @@ public class SentryUtils {
     private final String sentryDsn;
     private final String stage;
 
-    public SentryUtils () {
+    public SentryUtils() {
         sentryDsn = DotEnvUtils.getSentryDsn();
         stage = DotEnvUtils.getStage();
         Sentry.init(options -> {
@@ -15,7 +15,7 @@ public class SentryUtils {
         });
     }
 
-    public void sendException (Throwable throwable, String tag) {
+    public void sendException(Throwable throwable, String tag) {
         if (throwable == null) {
             return;
         }

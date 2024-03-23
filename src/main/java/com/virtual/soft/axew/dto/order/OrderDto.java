@@ -29,10 +29,10 @@ public class OrderDto {
     @Schema()
     private ClientDto client;
 
-    public OrderDto () {
+    public OrderDto() {
     }
 
-    public OrderDto (Order order) {
+    public OrderDto(Order order) {
         id = order.getId();
         moment = order.getMoment();
         orderStatus = order.getOrderStatus().getCode();
@@ -44,27 +44,27 @@ public class OrderDto {
                 .collect(Collectors.toList());
     }
 
-    public Long getId () {
+    public Long getId() {
         return id;
     }
 
-    public Instant getMoment () {
+    public Instant getMoment() {
         return moment;
     }
 
-    public Integer getOrderStatus () {
+    public Integer getOrderStatus() {
         return orderStatus;
     }
 
-    public List<OrderItemDto> getItems () {
+    public List<OrderItemDto> getItems() {
         return items;
     }
 
-    public double getTotal () {
+    public double getTotal() {
         return total;
     }
 
-    public ClientDto getClient () {
+    public ClientDto getClient() {
         return client;
     }
 }

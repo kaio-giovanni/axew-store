@@ -23,13 +23,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
     private final JwtAuth jwtAuth;
 
-    public JwtAuthenticationFilter (AuthenticationManager authenticationManager, JwtAuth jwtAuth) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtAuth jwtAuth) {
         this.authenticationManager = authenticationManager;
         this.jwtAuth = jwtAuth;
     }
 
     @Override
-    public Authentication attemptAuthentication (HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             UserAuthDto userAuth = new ObjectMapper()
                     .readValue(request.getInputStream(), UserAuthDto.class);
@@ -44,10 +44,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication (HttpServletRequest request,
-                                             HttpServletResponse response,
-                                             FilterChain chain,
-                                             Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain chain,
+                                            Authentication authResult) throws IOException, ServletException {
         String userName = ((UserAuth) authResult.getPrincipal()).getUsername();
         String token = jwtAuth.makeToken(userName);
         response.addHeader(jwtAuth.getHeaderAuth(), jwtAuth.getTokenPrefix() + token);

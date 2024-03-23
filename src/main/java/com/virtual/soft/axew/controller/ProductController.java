@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +23,11 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/product")
 public class ProductController {
 
-    @Autowired
-    private ProductService service;
+    private final ProductService service;
+
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping(value = "")
     @Operation(summary = "Get a paginate list of products")
@@ -33,7 +35,7 @@ public class ProductController {
             description = "Products paginated",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ProductPageDto.class))})})
-    public ResponseEntity<ProductPageDto> findAll (
+    public ResponseEntity<ProductPageDto> findAll(
             @Schema(example = "1")
             @RequestParam(name = "page", defaultValue = "0") int page,
             @Schema(example = "10")
@@ -57,7 +59,7 @@ public class ProductController {
             description = "Product data",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ProductDto.class))})})
-    public ResponseEntity<ProductDto> findById (@PathVariable Long id) {
+    public ResponseEntity<ProductDto> findById(@PathVariable Long id) {
         Product product = service.findById(id);
         ProductDto dto = new ProductDto(product);
 
@@ -70,7 +72,7 @@ public class ProductController {
             description = "Products paginated",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ProductPageDto.class))})})
-    public ResponseEntity<ProductPageDto> findByName (
+    public ResponseEntity<ProductPageDto> findByName(
             @RequestParam(name = "name") String name,
             @Schema(example = "1")
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -96,7 +98,7 @@ public class ProductController {
             description = "Product saved data",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ProductDto.class))})})
-    public ResponseEntity<ProductDto> save (@Valid @RequestBody ProductSaveDto newProduct) {
+    public ResponseEntity<ProductDto> save(@Valid @RequestBody ProductSaveDto newProduct) {
         Product product = service.fromDto(newProduct);
         Product productSaved = service.save(product);
         ProductDto dto = new ProductDto(productSaved);

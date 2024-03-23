@@ -12,11 +12,11 @@ public class CategorySaveDto {
     @Size(min = 5, max = 60)
     private String name;
 
-    public CategorySaveDto () {
+    public CategorySaveDto() {
         // Do nothing
     }
 
-    public String getName () {
+    public String getName() {
         return name;
     }
 }
