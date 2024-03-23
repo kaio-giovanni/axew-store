@@ -2,7 +2,6 @@ package com.virtual.soft.axew.service;
 
 import com.virtual.soft.axew.dto.address.AddressSaveDto;
 import com.virtual.soft.axew.entity.Address;
-import com.virtual.soft.axew.entity.Client;
 import com.virtual.soft.axew.exception.ResourceNotFoundException;
 import com.virtual.soft.axew.repository.AddressRepository;
 import org.springframework.data.domain.Page;

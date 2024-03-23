@@ -69,6 +69,7 @@ public class OrderSaveDto {
         private Double price;
 
         public OrderItemSaveDto() {
+            // Do nothing
         }
 
         public Long getProductId() {

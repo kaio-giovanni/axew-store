@@ -2,11 +2,11 @@ package com.virtual.soft.axew.log;
 
 import org.slf4j.LoggerFactory;
 
-public class Logger {
+public class Log {
 
     private final org.slf4j.Logger logger;
 
-    public Logger(Class<? extends Object> clazz) {
+    public Log(Class<? extends Object> clazz) {
         this.logger = LoggerFactory.getLogger(clazz);
     }
 

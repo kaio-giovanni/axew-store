@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FakeUtils {
 
-    public static List<Client> makeClients () {
+    public static List<Client> makeClients() {
         List<Client> clients = new ArrayList<>();
 
         final String userName = "userFake";
@@ -31,7 +31,7 @@ public class FakeUtils {
         return clients;
     }
 
-    public static Client makeClient (Long id) {
+    public static Client makeClient(Long id) {
         Client client = new Client("Fake User " + id, "000.000.000-" + id, "fake.user@email.com" + id)
                 .setId(id)
                 .setBirthDate(LocalDate.of(2021, 1, 1))
@@ -42,5 +42,9 @@ public class FakeUtils {
         client.setAddress(addressFake);
 
         return client;
+    }
+
+    public static Address makeAddress() {
+        return new Address("Street One", "Number one", "District one", "zipCode one");
     }
 }

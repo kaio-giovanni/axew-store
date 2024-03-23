@@ -23,6 +23,7 @@ public class AddressSaveDto {
     private String zipCode;
 
     public AddressSaveDto() {
+        // Do nothing
     }
 
     public String getStreet() {
