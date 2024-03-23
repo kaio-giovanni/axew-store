@@ -54,7 +54,7 @@ public class AddressController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PostMapping({"/save"})
+    @PostMapping({"/new"})
     @Operation(summary = "Save a new address")
     @ApiResponses(value = {@ApiResponse(responseCode = "201",
             description = "Address data",

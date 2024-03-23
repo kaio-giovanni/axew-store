@@ -48,9 +48,7 @@ public class OrderController {
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = OrderDto.class))})})
     public ResponseEntity<OrderDto> makeOrder(@Valid @RequestBody OrderSaveDto orderSaveDto) {
-        Order order = service.convertFromDto(orderSaveDto);
-        Order savedOrder = service.save(order);
-        OrderDto dto = new OrderDto(savedOrder);
+        OrderDto dto = service.saveOrder(orderSaveDto);
 
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }

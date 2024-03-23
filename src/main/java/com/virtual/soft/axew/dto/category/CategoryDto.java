@@ -15,18 +15,12 @@ public class CategoryDto {
     @Schema(example = "Technology")
     private String name;
 
-    @Schema
-    private List<ProductDto> products;
-
     public CategoryDto() {
     }
 
     public CategoryDto(Category category) {
         id = category.getId();
         name = category.getName();
-        products = category.getProducts()
-                .stream()
-                .map(ProductDto::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -37,7 +31,4 @@ public class CategoryDto {
         return name;
     }
 
-    public List<ProductDto> getProducts() {
-        return products;
-    }
 }

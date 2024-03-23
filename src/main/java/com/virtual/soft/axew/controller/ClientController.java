@@ -68,7 +68,7 @@ public class ClientController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PostMapping({"/save"})
+    @PostMapping({"/new"})
     @Operation(summary = "Save a new client")
     @ApiResponses(value = {@ApiResponse(responseCode = "201",
             description = "Client data",

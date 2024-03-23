@@ -1,7 +1,9 @@
 package com.virtual.soft.axew.utils;
 
 import com.virtual.soft.axew.entity.Address;
+import com.virtual.soft.axew.entity.Category;
 import com.virtual.soft.axew.entity.Client;
+import com.virtual.soft.axew.entity.Product;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -46,5 +48,25 @@ public class FakeUtils {
 
     public static Address makeAddress() {
         return new Address("Street One", "Number one", "District one", "zipCode one");
+    }
+
+    public static List<Category> makeCategories() {
+        List<Category> categories = new ArrayList<>();
+        for (long i=0; i<5; i++) {
+            categories.add(new Category(i, "Name " + i));
+        }
+
+        return categories;
+    }
+
+    public static List<Product> makeProducts() {
+        List<Product> products = new ArrayList<>();
+        for (int i =0; i < 5; i++) {
+            products.add(new Product("Product " + i,
+                    "Description of product " + i,
+                    i * 10.0)
+                    .setImgUrl("https://img/url"));
+        }
+        return products;
     }
 }

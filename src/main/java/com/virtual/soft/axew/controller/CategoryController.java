@@ -93,7 +93,7 @@ public class CategoryController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PostMapping({"", ""})
+    @PostMapping({"/new", ""})
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Save a new category")
     @ApiResponses(value = {@ApiResponse(responseCode = "201",
