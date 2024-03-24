@@ -34,8 +34,7 @@ public class AwsS3Request {
             bucketFiles.addAll(objects
                     .stream()
                     .filter(object -> object.getKey().endsWith(fileExtension))
-                    .toList()
-            );
+                    .toList());
 
             result = list(s3FolderPath, result);
         } while (result.isTruncated());

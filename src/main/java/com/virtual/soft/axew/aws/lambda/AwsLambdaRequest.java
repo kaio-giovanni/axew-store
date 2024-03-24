@@ -31,7 +31,7 @@ public class AwsLambdaRequest {
         return defaultClientConfig;
     }
 
-    private AwsLambdaResponseDto sendRequest(String lambdaName, String awsRegion, String payloadJson) {
+    public AwsLambdaResponseDto sendRequest(String lambdaName, String awsRegion, String payloadJson) {
         Regions region = Regions.fromName(awsRegion);
 
         AWSLambdaClientBuilder builder = AWSLambdaClientBuilder.standard()
