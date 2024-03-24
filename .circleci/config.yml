@@ -13,7 +13,9 @@ attach_workspace: &attach_workspace
 jobs:
   test:
     machine:
-      image: ubuntu-2204:2022.04.1
+      image: ubuntu-2204:default
+    docker:
+      - image: ubuntu
     steps:
       - checkout
       - *attach_workspace
