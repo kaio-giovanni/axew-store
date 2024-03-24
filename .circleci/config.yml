@@ -2,23 +2,28 @@ version: 2.1
 
 executors:
   default:
-    working_directory: ~/giovanni
+    working_directory: ~/axew-store
     docker:
       - image: circleci/openjdk:11
 
 attach_workspace: &attach_workspace
   attach_workspace:
-    at: ~/giovanni
+    at: ~/axew-store
 
 jobs:
   test:
-    executor: default
+    machine:
+      image: ubuntu-2204:2022.04.1
     steps:
       - checkout
       - *attach_workspace
       - run:
-          name: 'Run tests'
+          name: "Run tests"
           command: |
+            sudo apt-get update
+            curl -s "https://get.sdkman.io" | bash
+            source "$HOME/.sdkman/bin/sdkman-init.sh"
+            sdk install java 17.0.10-oracle
             ./gradlew check
 
   deploy:
@@ -28,11 +33,20 @@ jobs:
       - *attach_workspace
       - setup_remote_docker
       - run:
-          name: 'Deploy'
+          name: "Deploy"
           command: |
             echo STAGE=${STAGE} >> .env
+            echo PROJECT_NAME="axew-store" >> .env
+            echo AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} >> .env
+            echo AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} >> .env
+            echo SENTRY_DSN=${SENTRY_DSN} >> .env
+            echo DATABASE_URL=${DB_URL} >> .env
+            echo DATABASE_USER=${DB_USERNAME} >> .env
+            echo DATABASE_PASSWORD=${DB_PASSWORD} >> .env
+            SSH_IDENTITY_KEY=${SSH_IDENTITY_KEY} \
             STAGE=${STAGE} \
-            gradle deploy
+            RUN_TESTS=false \
+            ./gradlew deploy
 
 workflows:
   build_and_deploy:

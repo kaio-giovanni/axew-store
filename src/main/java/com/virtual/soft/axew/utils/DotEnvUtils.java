@@ -46,4 +46,9 @@ public class DotEnvUtils {
     public static String getAwsSecretAccessKey() {
         return dotenv.get("AWS_SECRET_ACCESS_KEY");
     }
+
+    public static String getAwsRegion() {
+        return dotenv.get("AWS_REGION");
+    }
 }
+
