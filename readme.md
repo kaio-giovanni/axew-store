@@ -65,7 +65,6 @@ To make deploy, run the command `gradle deploy` passing environment variables be
 - `STAGE` Stage name (dev, validation or prod) where it's necessary to make deploy (Required)
 - `RUN_TESTS` If true, run tests before deploy. If false, don't run tests before deploy. By default, it's true.
 - `SSH_IDENTITY_KEY` Content of ssh key file (.pem)
-  with [break lines replaced by commas](https://app.nuclino.com/cyan-agro/Dev/Replace-break-lines-of-a-ssh-filepem-by-commas-0ed0fbeb-134b-4075-8def-acc5370139b3)
 
 Example:
 
