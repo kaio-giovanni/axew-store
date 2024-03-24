@@ -4,7 +4,7 @@ executors:
   default:
     working_directory: ~/axew-store
     docker:
-      - image: circleci/openjdk:11
+      - image: circleci/openjdk:17
 
 attach_workspace: &attach_workspace
   attach_workspace:
@@ -12,20 +12,13 @@ attach_workspace: &attach_workspace
 
 jobs:
   test:
-    machine:
-      image: ubuntu-2204:default
-    docker:
-      - image: ubuntu
+    executor: default
     steps:
       - checkout
       - *attach_workspace
       - run:
           name: "Run tests"
           command: |
-            sudo apt-get update
-            curl -s "https://get.sdkman.io" | bash
-            source "$HOME/.sdkman/bin/sdkman-init.sh"
-            sdk install java 17.0.10-oracle
             ./gradlew check
 
   deploy:
