@@ -67,6 +67,26 @@ class SaveTest {
                         .status().isCreated());
     }
 
+    @Test
+    @DisplayName("Should return forbidden status when use ROLE USER")
+    void returnIncorrectResponseWhenUseIncorrectRole() throws Exception {
+        final Set<RoleEnum> roles = Set.of(RoleEnum.USER);
+        SecurityContextTestUtils.fakeAuthentication(100L, roles);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", "Calca jeans");
+        params.put("description", "Calca jeans blablabla");
+        params.put("price", 200);
+        params.put("imgUrl", "http://fake/path/image");
+        params.put("categoryIds", new Integer[]{1, 2});
+
+        ProductSaveDto dto = objectMapper.convertValue(params, ProductSaveDto.class);
+
+        callEndpoint(dto)
+                .andExpect(MockMvcResultMatchers
+                        .status().isForbidden());
+    }
+
     public ResultActions callEndpoint(ProductSaveDto payload) throws Exception {
         return mockMvc.perform(MockMvcRequestBuilders
                 .post("/product/new")

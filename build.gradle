@@ -32,6 +32,18 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-ui:1.4.2'
     implementation 'io.sentry:sentry:3.1.0'
 
+    implementation ('com.amazonaws:aws-java-sdk-core:1.12.686') {
+        exclude module: 'commons-logging'
+    }
+
+    implementation ('com.amazonaws:aws-java-sdk-s3:1.12.686') {
+        exclude module: 'commons-logging'
+    }
+
+    implementation ('com.amazonaws:aws-java-sdk-lambda:1.12.686') {
+        exclude module: 'commons-logging'
+    }
+
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly 'com.h2database:h2'
 
@@ -41,6 +53,7 @@ dependencies {
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.7.7'
 
 }
+
 
 test {
     useJUnitPlatform()
@@ -60,6 +73,7 @@ sonarlint {
         message 'java:S1068'
         message 'java:S4276'
         message 'java:S5976'
+        message 'java:S3958'
     }
 }
 
@@ -67,10 +81,25 @@ gitHooks {
     hooks = ['pre-commit': 'check']
 }
 
-task deploy() {
+tasks.register('deploy', Exec) {
+    workingDir "$projectDir"
     def stage = System.getenv('STAGE')
+    def identity = System.getenv('SSH_IDENTITY_KEY')
+    def runTests = System.getenv('RUN_TESTS')
+    runTests = runTests != "false"
+    def identityFile = ''
 
-    if (stage != null) {
-        println "Deploying project in STAGE $stage"
+    if (identity != null) {
+        def sshKeyLines = identity.split(',')
+        identityFile = 'identity.pem'
+        new File(identityFile).delete()
+        File file = new File(identityFile)
+
+        for (line in sshKeyLines) {
+            file.withWriterAppend { o -> o.println line }
+        }
     }
+
+    commandLine "chmod", "+x", "deploy.sh"
+    commandLine "sh", "-c", "./deploy.sh ${stage} ${runTests} ${identityFile}"
 }
