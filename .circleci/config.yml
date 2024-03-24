@@ -4,7 +4,7 @@ executors:
   default:
     working_directory: ~/axew-store
     docker:
-      - image: cimg/openjdk:17
+      - image: cimg/openjdk:17.0.10
 
 attach_workspace: &attach_workspace
   attach_workspace:
