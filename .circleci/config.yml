@@ -4,7 +4,7 @@ executors:
   default:
     working_directory: ~/axew-store
     docker:
-      - image: ubuntu
+      - image: circleci/openjdk:17
 
 attach_workspace: &attach_workspace
   attach_workspace:
@@ -13,6 +13,8 @@ attach_workspace: &attach_workspace
 jobs:
   test:
     executor: default
+    machine:
+      image: ubuntu-2204:default
     steps:
       - checkout
       - *attach_workspace
