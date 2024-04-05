@@ -3,6 +3,7 @@ package com.virtual.soft.axew.dto.product;
 import com.virtual.soft.axew.entity.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(name = "Product")
 public class ProductDto {
 
     @Schema(example = "120")

@@ -4,6 +4,7 @@ import com.virtual.soft.axew.dto.product.ProductDto;
 import com.virtual.soft.axew.entity.OrderItem;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(name = "OrderItem")
 public class OrderItemDto {
 
     @Schema()

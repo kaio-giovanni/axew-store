@@ -1,0 +1,7 @@
+.idea/
+.gradle/
+.circleci/
+**/test/
+.env.example
+application.log
+readme.md

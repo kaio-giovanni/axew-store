@@ -28,6 +28,20 @@ gradle clean build
 gradle bootRun
 ```
 
+Alternatively, you can run the project as a Docker container:
+
+- Create the docker image for the project:
+
+```bash
+
+docker build -t axew-image .
+```
+
+```bash
+
+docker run --name axew -p 8080:8080 --env-file ./.env axew-image
+```
+
 ## Documentation
 
 - To see documentation of the project, run the project and access the path below:

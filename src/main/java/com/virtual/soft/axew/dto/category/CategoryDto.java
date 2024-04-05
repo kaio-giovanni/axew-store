@@ -3,6 +3,7 @@ package com.virtual.soft.axew.dto.category;
 import com.virtual.soft.axew.entity.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(name = "Category")
 public class CategoryDto {
 
     @Schema(example = "10")
