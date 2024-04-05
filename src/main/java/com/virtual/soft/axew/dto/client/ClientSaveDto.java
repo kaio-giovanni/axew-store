@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Set;
 
+@Schema(name = "SaveNewClient")
 public class ClientSaveDto {
 
     @Schema(example = "Client name")

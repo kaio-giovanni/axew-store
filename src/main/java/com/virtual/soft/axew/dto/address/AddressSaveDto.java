@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotEmpty;
 
+@Schema(name = "SaveNewAddress")
 public class AddressSaveDto {
 
     @Schema(example = "Street one")

@@ -3,6 +3,7 @@ package com.virtual.soft.axew.dto.address;
 import com.virtual.soft.axew.entity.Address;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(name = "Address")
 public class AddressDto {
 
     @Schema(example = "10")

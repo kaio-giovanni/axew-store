@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+@Schema(name = "SaveNewOrder")
 public class OrderSaveDto {
 
     @Schema(hidden = true)

@@ -2,6 +2,7 @@ package com.virtual.soft.axew.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(name = "AuthUser")
 public class UserAuthDto {
 
     @Schema(example = "myemail@email.com")

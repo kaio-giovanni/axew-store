@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Schema(name = "Order")
 public class OrderDto {
 
     @Schema(example = "120")

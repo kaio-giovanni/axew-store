@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+@Schema(name = "SaveNewCategory")
 public class CategorySaveDto {
 
     @Schema(example = "Technology")

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@Schema(name = "SaveNewProduct")
 public class ProductSaveDto {
 
     @Schema(example = "Name of Product")

@@ -1,5 +1,8 @@
 package com.virtual.soft.axew.dto.aws;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(name = "AwsLambdaResponse")
 public class AwsLambdaResponseDto {
 
     private String response;
